@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Sometimes the Situation Is Over. But the Emotion Is Still There. — Heart &amp; Mind</title>
+<meta name="description" content="A 90-minute live online session from Heart &amp; Mind. Healing the past. Transforming the present. Creating your future. Reserve your spot." />
+<meta name="theme-color" content="#f5f1eb" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Heart &amp; Mind" />
+<meta property="og:title" content="Sometimes, the Situation Is Over. But the Emotion Is Still There." />
+<meta property="og:description" content="A 90-minute live online session to understand what you are still carrying — and find a way forward." />
+
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f%5B%5D=cabinet-grotesk@800,700,500&f%5B%5D=switzer@300,400,500,600&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300..800&display=swap" rel="stylesheet" />
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   Heart & Mind — 90-minute webinar landing page.
+
+   Brand tokens carried over from the main site (src/index.css):
+   maroon / crimson / rose / gold / linen, Cabinet Grotesk + Switzer.
+   The main site runs maroon-dominant; this page runs light-first —
+   linen ground, maroon ink, rose as fill, crimson for action — with
+   two maroon bands used as emotional beats rather than as decoration.
+   ═══════════════════════════════════════════════════════════════ */
+
+:root{
+  --maroon:#500711;
+  --maroon-2:#5d0f1b;
+  --crimson:#b0041a;
+  --crimson-deep:#8d0315;
+  --rose:#ed9bbd;
+  --rose-lift:#f5bcd3;
+  --rose-pale:#fbeaf1;
+  --rose-hair:#f0d4e0;
+  --gold:#ffc95f;
+  --linen:#f5f1eb;
+  --linen-2:#faf7f3;
+  --paper:#fffdfb;
+  --stone:#6b625e;
+  --stone-soft:#8b8079;
+
+  --ink:var(--maroon);
+  --rule:var(--rose-hair);
+
+  --font-display:"Cabinet Grotesk","Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+  --font-body:"Switzer","Plus Jakarta Sans",ui-sans-serif,system-ui,sans-serif;
+
+  --ease:cubic-bezier(.16,1,.3,1);
+  --shell:1120px;
+  --pad:clamp(1.25rem,5vw,2.5rem);
+  --band:clamp(4.5rem,10vw,8rem);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:5rem;-webkit-text-size-adjust:100%}
+body{
+  margin:0;overflow-x:clip;
+  background:var(--linen);
+  color:var(--stone);
+  font-family:var(--font-body);
+  font-size:clamp(1rem,.35vw + .95rem,1.075rem);
+  font-weight:400;line-height:1.68;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--ink);margin:0;line-height:1.05;letter-spacing:-.03em;font-weight:800;overflow-wrap:break-word}
+p{margin:0}
+img{max-width:100%;display:block}
+a{color:inherit}
+::selection{background:var(--rose);color:var(--maroon)}
+:focus-visible{outline:2px solid var(--crimson);outline-offset:3px;border-radius:3px}
+
+/* ── Layout ─────────────────────────────────────────────────── */
+.shell{width:100%;max-width:var(--shell);margin-inline:auto;padding-inline:var(--pad)}
+.tight{max-width:820px}
+section{position:relative}
+.band{padding-block:var(--band)}
+
+/* Grounds. Sections flow rather than stack as separate blocks: the light
+   bands share one linen family and are separated by a soft vertical wash
+   and a hairline, never a hard edge. */
+.b-linen{background:var(--linen)}
+.b-paper{background:linear-gradient(180deg,var(--paper) 0%,var(--linen-2) 100%)}
+.b-soft{background:linear-gradient(180deg,var(--linen) 0%,var(--rose-pale) 100%)}
+.b-maroon{
+  background:radial-gradient(120% 90% at 50% 0%,var(--maroon-2) 0%,var(--maroon) 62%);
+  color:rgba(237,155,189,.82);
+}
+.b-maroon h1,.b-maroon h2,.b-maroon h3,.b-maroon h4{color:#fff}
+.hair-top{border-top:1px solid var(--rule)}
+
+/* Ornament between movements — the connective tissue of the page. */
+.orn{display:flex;align-items:center;justify-content:center;gap:.55rem;padding-block:clamp(1.75rem,4vw,2.75rem)}
+.orn i{width:4px;height:4px;border-radius:50%;background:var(--rose)}
+.orn i:nth-child(2){width:5px;height:5px;background:var(--crimson);opacity:.45}
+.orn.on-dark i{background:var(--rose);opacity:.45}
+.orn.on-dark i:nth-child(2){background:var(--gold);opacity:.7}
+
+/* ── Type ───────────────────────────────────────────────────── */
+.eyebrow{
+  font-family:var(--font-body);font-size:.735rem;font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--crimson);
+  display:inline-flex;align-items:center;gap:.65rem;
+}
+.eyebrow::before{content:"";width:26px;height:1px;background:currentColor;opacity:.55}
+.eyebrow.on-dark{color:var(--rose)}
+.eyebrow.center::after{content:"";width:26px;height:1px;background:currentColor;opacity:.55}
+
+.h-hero{font-size:clamp(2.4rem,6.2vw,4.4rem);line-height:1.02;letter-spacing:-.04em}
+.h-sec{font-size:clamp(1.95rem,4.2vw,3.1rem);line-height:1.06;letter-spacing:-.035em}
+.h-sub{font-family:var(--font-display);font-size:clamp(1.2rem,1.9vw,1.5rem);font-weight:700;letter-spacing:-.02em}
+.lede{font-size:clamp(1.04rem,.55vw + .95rem,1.18rem);line-height:1.66;max-width:58ch}
+.muted{color:var(--stone-soft)}
+.b-maroon .muted{color:rgba(237,155,189,.6)}
+.center{text-align:center}
+.center .lede{margin-inline:auto}
+.center .eyebrow{justify-content:center}
+
+/* The second hero line carries the weight — crimson, over a soft rose
+   wash that sweeps in once. Painted as an inline background rather than
+   an overlay so it follows the text however the headline wraps. */
+.accent{
+  color:var(--crimson);
+  background-image:linear-gradient(rgba(237,155,189,.6),rgba(237,155,189,.6));
+  background-repeat:no-repeat;background-size:0 .19em;background-position:0 84%;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  animation:sweep 1.5s var(--ease) .75s forwards;
+}
+@keyframes sweep{to{background-size:100% .19em}}
+
+/* Three-line brand promise */
+.promise{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.1rem;margin-top:2rem}
+.promise span{
+  font-family:var(--font-display);font-weight:700;color:var(--maroon);
+  font-size:clamp(1rem,1.4vw,1.2rem);letter-spacing:-.015em;
+}
+.promise .dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex:none}
+.b-maroon .promise span{color:#fff}
+.promise.stacked{flex-direction:column;align-items:center;gap:.4rem}
+.promise.stacked .dot{width:4px;height:4px;background:var(--gold);opacity:.6}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.7rem;
+  min-height:56px;padding:1rem 2.1rem;border:0;border-radius:999px;
+  background:var(--crimson);color:#fff;
+  font-family:var(--font-body);font-size:1.02rem;font-weight:600;
+  text-decoration:none;cursor:pointer;white-space:nowrap;
+  box-shadow:0 1px 2px rgba(80,7,17,.16),0 12px 28px -12px rgba(80,7,17,.45);
+  transition:background-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease);
+}
+.btn .arw{transition:transform .3s var(--ease)}
+.btn:hover{background:var(--crimson-deep);transform:translateY(-2px);box-shadow:0 2px 4px rgba(80,7,17,.18),0 20px 38px -14px rgba(80,7,17,.5)}
+.btn:hover .arw{transform:translateX(4px)}
+.btn:active{transform:translateY(0)}
+.btn-lg{min-height:64px;padding:1.15rem 2.5rem;font-size:1.08rem}
+.btn-rose{background:var(--rose);color:var(--maroon);box-shadow:0 12px 34px -14px rgba(0,0,0,.55)}
+.btn-rose:hover{background:var(--rose-lift);box-shadow:0 20px 44px -16px rgba(0,0,0,.6)}
+.btn-quiet{
+  background:transparent;color:var(--maroon);border:1px solid var(--rose-hair);
+  box-shadow:none;min-height:52px;padding:.85rem 1.7rem;
+}
+.btn-quiet:hover{background:#fff;border-color:var(--rose);color:var(--crimson);box-shadow:0 10px 24px -16px rgba(80,7,17,.4)}
+.cta-note{font-size:.86rem;color:var(--stone-soft);margin-top:1.05rem}
+.b-maroon .cta-note{color:rgba(237,155,189,.6)}
+
+/* ── Nav ────────────────────────────────────────────────────── */
+.nav{
+  position:sticky;top:0;z-index:60;
+  background:rgba(245,241,235,.85);backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid transparent;
+  transition:border-color .35s var(--ease),background-color .35s var(--ease);
+}
+.nav.scrolled{border-bottom-color:var(--rule);background:rgba(245,241,235,.95)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:66px}
+/* The wordmark already reads "Heart and Mind", so the lockup pairs it
+   with context rather than repeating the name in type. */
+.brand{display:flex;align-items:center;gap:.8rem;text-decoration:none}
+.brand img{width:42px;height:42px;border-radius:9px;flex:none}
+.brand-tag{
+  font-size:.68rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--stone-soft);line-height:1.35;
+  padding-left:.8rem;border-left:1px solid var(--rule);
+}
+.nav .btn{min-height:44px;padding:.6rem 1.35rem;font-size:.9rem;box-shadow:none}
+@media (max-width:640px){.nav .btn{display:none}}
+
+/* ── Hero ───────────────────────────────────────────────────── */
+.hero{
+  position:relative;overflow:hidden;
+  padding-block:clamp(3.5rem,8vw,5.75rem) clamp(4rem,9vw,7rem);
+  background:linear-gradient(168deg,var(--paper) 0%,var(--linen) 46%,var(--rose-pale) 100%);
+}
+.hero-in{position:relative;z-index:2;max-width:1080px}
+.hero .eyebrow{margin-bottom:clamp(1.4rem,3vw,2rem)}
+.hero .lede{margin-top:1.9rem}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:2.4rem}
+/* Two aligned rows sharing one rule: the live/format line, and the
+   dated facts beneath it. Same separators and baseline either side. */
+.hero-meta{margin-top:1.6rem;display:flex;flex-direction:column;gap:.6rem;align-items:flex-start}
+.meta-row{display:flex;align-items:center;flex-wrap:wrap;gap:.65rem;font-size:.9rem;font-weight:500}
+.meta-row .sep{width:1px;height:14px;background:var(--rose-hair);flex:none}
+.meta-facts{color:var(--stone)}
+.meta-facts b{font-weight:600;color:var(--maroon)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--crimson);position:relative;flex:none}
+.live-dot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--crimson);animation:pulse 3.4s var(--ease) infinite}
+@keyframes pulse{0%{transform:scale(.55);opacity:.6}70%{transform:scale(1.3);opacity:0}100%{opacity:0}}
+
+/* Hero atmosphere: a breathing warm aura and slow ripples — abstract
+   reflection settling, not medical imagery. */
+.atmos{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+.aura{position:absolute;border-radius:50%;filter:blur(60px);animation:breathe 17s var(--ease) infinite alternate}
+.aura.a1{width:46vw;height:46vw;min-width:340px;min-height:340px;right:-8vw;top:-6vw;
+  background:radial-gradient(circle,rgba(237,155,189,.58) 0%,rgba(237,155,189,0) 70%)}
+.aura.a2{width:34vw;height:34vw;min-width:260px;min-height:260px;right:16vw;bottom:-12vw;
+  background:radial-gradient(circle,rgba(255,201,95,.3) 0%,rgba(255,201,95,0) 70%);animation-delay:-7s}
+.aura.a3{width:26vw;height:26vw;min-width:200px;min-height:200px;left:-9vw;bottom:4vw;
+  background:radial-gradient(circle,rgba(176,4,26,.12) 0%,rgba(176,4,26,0) 70%);animation-delay:-3.5s}
+@keyframes breathe{from{transform:scale(1) translateY(0)}to{transform:scale(1.12) translateY(-14px)}}
+
+.ripples{position:absolute;right:-5vw;top:1vw;width:min(56vw,700px);height:min(56vw,700px);opacity:.6}
+.ripples circle{fill:none;stroke:var(--rose);stroke-width:1;transform-origin:center;animation:widen 9s var(--ease) infinite}
+.ripples circle:nth-child(2){animation-delay:1.8s}
+.ripples circle:nth-child(3){animation-delay:3.6s}
+.ripples circle:nth-child(4){animation-delay:5.4s}
+.ripples circle:nth-child(5){stroke:var(--crimson);opacity:.3;animation-delay:7.2s}
+@keyframes widen{0%{transform:scale(.26);opacity:0}18%{opacity:.9}100%{transform:scale(1);opacity:0}}
+@media (max-width:820px){.ripples{right:-26vw;top:auto;bottom:-16vw;opacity:.4}}
+
+/* ── Reveal on scroll ───────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}
+
+/* ── Section 2 · Relatability ───────────────────────────────── */
+.ask{max-width:760px;margin-top:clamp(2.5rem,5vw,3.5rem)}
+.ask-row{
+  display:flex;align-items:baseline;gap:clamp(1rem,3vw,2rem);
+  padding-block:clamp(1.35rem,2.6vw,1.85rem);
+  border-top:1px solid var(--rule);
+}
+.ask-row:last-of-type{border-bottom:1px solid var(--rule)}
+.ask-row .n{
+  font-family:var(--font-body);font-size:.76rem;font-weight:600;letter-spacing:.12em;
+  color:var(--rose);flex:none;width:1.8rem;padding-top:.3rem;
+}
+.ask-row p{
+  font-family:var(--font-display);font-weight:500;color:var(--maroon);
+  font-size:clamp(1.18rem,2.5vw,1.72rem);line-height:1.28;letter-spacing:-.02em;
+}
+.ask-close{margin-top:clamp(2.5rem,5vw,3.25rem);max-width:640px}
+.ask-close .q{
+  font-family:var(--font-display);font-size:clamp(1.3rem,2.6vw,1.8rem);font-weight:700;
+  color:var(--crimson);letter-spacing:-.02em;line-height:1.25;
+}
+
+/* ── Section 3 · Past & present ─────────────────────────────── */
+.split{display:grid;gap:clamp(2.5rem,6vw,5rem);grid-template-columns:1fr}
+@media (min-width:900px){.split{grid-template-columns:1fr 1fr;align-items:start}}
+.echo{margin:0;padding:0;list-style:none}
+.echo li{
+  display:flex;align-items:center;gap:1.1rem;
+  padding-block:1.15rem;border-top:1px solid rgba(237,155,189,.2);
+  font-size:1.06rem;color:#fff;font-weight:500;
+}
+.echo li:last-child{border-bottom:1px solid rgba(237,155,189,.2)}
+.echo .ic{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:50%;
+  background:rgba(237,155,189,.1);border:1px solid rgba(237,155,189,.22)}
+.echo .ic svg{width:16px;height:16px;stroke:var(--rose);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.pull{
+  margin-top:clamp(2rem,4vw,2.75rem);padding-left:1.4rem;border-left:2px solid var(--rose);
+  font-family:var(--font-display);font-size:clamp(1.15rem,2vw,1.4rem);font-weight:500;
+  color:#fff;line-height:1.4;letter-spacing:-.02em;
+}
+
+/* ── Section 4 · The session ────────────────────────────────── */
+.pillars{display:grid;gap:0;margin-top:clamp(2.5rem,5vw,3.5rem);border-top:1px solid var(--rule)}
+@media (min-width:760px){.pillars{grid-template-columns:1fr 1fr}}
+.pillar{padding:clamp(1.75rem,3.5vw,2.5rem) 0;border-bottom:1px solid var(--rule)}
+@media (min-width:760px){
+  .pillar{padding-inline:clamp(1.5rem,3vw,2.5rem)}
+  .pillar:nth-child(odd){padding-left:0;border-right:1px solid var(--rule)}
+  .pillar:nth-child(even){padding-right:0}
+}
+.pillar .n{
+  font-size:.74rem;font-weight:600;letter-spacing:.16em;color:var(--rose);
+  display:block;margin-bottom:.9rem;
+}
+.pillar h3{font-size:clamp(1.2rem,1.9vw,1.42rem);margin-bottom:.6rem}
+.pillar p{font-size:.99rem;line-height:1.6}
+
+/* ── Section 5 · Who it is for ──────────────────────────────── */
+.checks{display:grid;gap:.15rem 2.5rem;margin:clamp(2.25rem,4.5vw,3rem) 0 0;padding:0;list-style:none}
+@media (min-width:760px){.checks{grid-template-columns:1fr 1fr}}
+.checks li{display:flex;gap:.95rem;align-items:flex-start;padding-block:.85rem;line-height:1.55}
+.checks .tick{width:22px;height:22px;flex:none;margin-top:.15rem;display:grid;place-items:center;
+  border-radius:50%;background:var(--rose-pale);border:1px solid var(--rose-hair)}
+.checks .tick svg{width:11px;height:11px;stroke:var(--crimson);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── Section 6 · Event & registration ───────────────────────── */
+
+
+/* The card is the whole section now, so the band padding above it is
+   the only spacing it needs. */
+.reg{
+  margin-top:0;
+  background:var(--paper);border:1px solid var(--rose-hair);border-radius:20px;
+  padding:clamp(1.85rem,4.5vw,3.25rem);text-align:center;
+  box-shadow:0 1px 2px rgba(80,7,17,.04),0 26px 60px -34px rgba(80,7,17,.35);
+  position:relative;overflow:hidden;
+}
+.reg::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;
+  background:linear-gradient(90deg,var(--rose) 0%,var(--crimson) 50%,var(--gold) 100%);opacity:.85}
+.reg .k{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--stone-soft)}
+.price{font-family:var(--font-display);font-weight:800;color:var(--maroon);
+  font-size:clamp(2.9rem,7vw,4.1rem);line-height:1;letter-spacing:-.04em;margin:.55rem 0 .35rem}
+.price .cur{font-size:.5em;vertical-align:.32em;margin-right:.06em;color:var(--crimson)}
+.reg .btn{margin-top:1.9rem;width:100%;max-width:420px}
+/* Inline rather than flex, so the padlock never orphans onto its own
+   line when the reassurance text wraps on a phone. */
+.secure{margin-top:1.05rem;font-size:.86rem;color:var(--stone-soft);text-align:center}
+.secure svg{width:14px;height:14px;vertical-align:-2px;margin-right:.45rem;
+  stroke:var(--stone-soft);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+.journey{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.75rem 1rem;
+  margin-top:clamp(2rem,4vw,2.5rem);padding-top:clamp(1.5rem,3vw,2rem);border-top:1px solid var(--rule)}
+.journey .step{display:flex;align-items:center;gap:.6rem;font-size:.92rem;font-weight:500;color:var(--maroon)}
+.journey .step i{width:22px;height:22px;flex:none;display:grid;place-items:center;border-radius:50%;
+  background:var(--rose-pale);color:var(--crimson);font-size:.7rem;font-weight:700;font-style:normal;font-family:var(--font-body)}
+.journey .arw2{color:var(--rose);font-size:.9rem}
+
+/* ── Section 7 · FAQ ────────────────────────────────────────── */
+.faq{max-width:880px;margin-top:clamp(2.25rem,4.5vw,3rem);border-top:1px solid var(--rule)}
+.faq details{border-bottom:1px solid var(--rule)}
+.faq summary{
+  display:flex;align-items:center;justify-content:space-between;gap:1.5rem;
+  padding-block:clamp(1.15rem,2.4vw,1.5rem);cursor:pointer;list-style:none;
+  font-family:var(--font-display);font-weight:700;font-size:clamp(1.02rem,1.6vw,1.16rem);
+  color:var(--maroon);letter-spacing:-.015em;line-height:1.35;
+  transition:color .25s var(--ease);
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--crimson)}
+.faq .pm{position:relative;width:16px;height:16px;flex:none}
+.faq .pm::before,.faq .pm::after{content:"";position:absolute;background:var(--crimson);
+  transition:transform .3s var(--ease),opacity .3s var(--ease)}
+.faq .pm::before{left:0;right:0;top:7.5px;height:1.5px}
+.faq .pm::after{top:0;bottom:0;left:7.5px;width:1.5px}
+.faq details[open] .pm::after{transform:scaleY(0);opacity:0}
+.faq .ans{overflow:hidden}
+.faq .ans p{padding-bottom:1.5rem;max-width:64ch;font-size:1rem}
+.faq details[open] .ans p{animation:fadein .5s var(--ease) both}
+@keyframes fadein{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+
+/* ── Section 8 · Final ──────────────────────────────────────── */
+.final{position:relative;overflow:hidden;text-align:center;
+  padding-block:clamp(5rem,11vw,8.5rem)}
+.final .glow{position:absolute;left:50%;top:-10%;width:min(90vw,780px);height:min(90vw,780px);
+  transform:translateX(-50%);border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,rgba(237,155,189,.15) 0%,rgba(237,155,189,0) 68%);
+  animation:breathe 19s var(--ease) infinite alternate}
+.final-in{position:relative;z-index:2}
+.pause{display:flex;flex-direction:column;gap:.45rem;align-items:center;margin-top:clamp(2.25rem,4.5vw,3rem)}
+.pause span{font-size:1.08rem;color:rgba(237,155,189,.8)}
+.pause b{display:block;color:#fff;font-family:var(--font-display);font-weight:700;
+  font-size:clamp(1.15rem,2vw,1.4rem);letter-spacing:-.02em;margin-bottom:.35rem}
+
+/* ── Footer ─────────────────────────────────────────────────── */
+.foot{background:var(--maroon);border-top:1px solid rgba(237,155,189,.16);
+  padding-block:clamp(2.5rem,5vw,3.5rem);color:rgba(237,155,189,.6);font-size:.88rem}
+.foot-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
+/* The mark's own ground is the same maroon as the footer, so it needs a
+   hairline to read as a badge rather than as floating letters. */
+.foot .brand img{width:48px;height:48px;border:1px solid rgba(237,155,189,.24)}
+.foot .brand-tag{color:rgba(237,155,189,.6);border-left-color:rgba(237,155,189,.2)}
+.foot .note{max-width:52ch;line-height:1.6}
+
+/* ── Reservation modal ──────────────────────────────────────── */
+.modal[hidden]{display:none}
+.modal{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;
+  padding:clamp(1rem,4vw,2rem)}
+.modal-veil{position:absolute;inset:0;background:rgba(45,4,10,.55);backdrop-filter:blur(4px);
+  opacity:0;transition:opacity .3s var(--ease)}
+.modal.open .modal-veil{opacity:1}
+.modal-card{
+  position:relative;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;
+  background:var(--paper);border:1px solid var(--rose-hair);border-radius:20px;
+  padding:clamp(1.6rem,4vw,2.25rem);
+  box-shadow:0 30px 80px -30px rgba(45,4,10,.6);
+  opacity:0;transform:translateY(14px) scale(.985);
+  transition:opacity .35s var(--ease),transform .35s var(--ease);
+}
+.modal.open .modal-card{opacity:1;transform:none}
+.modal-card::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;
+  border-radius:20px 20px 0 0;
+  background:linear-gradient(90deg,var(--rose) 0%,var(--crimson) 50%,var(--gold) 100%);opacity:.85}
+.modal-x{
+  position:absolute;top:.85rem;right:.85rem;width:34px;height:34px;display:grid;place-items:center;
+  border:0;border-radius:50%;background:transparent;color:var(--stone-soft);
+  font-size:1.4rem;line-height:1;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease);
+}
+.modal-x:hover{background:var(--rose-pale);color:var(--crimson)}
+.modal-h{font-size:clamp(1.5rem,4vw,1.9rem);letter-spacing:-.03em;margin-top:1rem}
+.modal-meta{font-size:.88rem;color:var(--stone-soft);margin-top:.6rem;
+  padding-bottom:1.35rem;border-bottom:1px solid var(--rule)}
+
+.fld{display:block;margin-top:1.15rem}
+.fld > span{display:block;font-size:.78rem;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--stone);margin-bottom:.45rem}
+.fld input,.fld select{
+  width:100%;font:inherit;font-size:1rem;color:var(--maroon);
+  background:#fff;border:1px solid var(--rose-hair);border-radius:10px;
+  padding:.8rem .95rem;min-height:50px;
+  transition:border-color .2s var(--ease),box-shadow .2s var(--ease);
+}
+.fld input::placeholder{color:#b9aca6}
+.fld input:hover,.fld select:hover{border-color:var(--rose)}
+.fld input:focus,.fld select:focus{outline:none;border-color:var(--crimson);box-shadow:0 0 0 3px rgba(176,4,26,.1)}
+/* The native control is replaced with the same chevron on every platform,
+   so the select sits in the same visual language as the text fields. */
+.fld select{
+  appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:2.5rem;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b625e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .95rem center;background-size:16px 16px;
+}
+/* Grey while the placeholder option is still the selected one. */
+.fld select:required:invalid{color:#b9aca6}
+.fld select option{color:var(--maroon)}
+.fld .err{display:none;font-style:normal;font-size:.8rem;color:var(--crimson);margin-top:.4rem}
+.fld.invalid input,.fld.invalid select{border-color:var(--crimson)}
+.fld.invalid .err{display:block}
+#reg-form .btn{width:100%;margin-top:1.6rem}
+#reg-form .btn[disabled]{opacity:.65;cursor:progress}
+.form-err{display:none;margin-top:.9rem;font-size:.87rem;color:var(--crimson);text-align:center}
+.form-err.show{display:block}
+
+/* Confirmation state */
+.done{text-align:center;padding-block:.75rem}
+.done-mark{width:64px;height:64px;margin:0 auto 1.3rem;display:grid;place-items:center;
+  border-radius:50%;background:var(--rose-pale);border:1px solid var(--rose-hair)}
+.done-mark svg{width:28px;height:28px;stroke:var(--crimson);fill:none;stroke-width:2.4;
+  stroke-linecap:round;stroke-linejoin:round}
+.done .modal-h{margin-top:0}
+.done p{margin-top:.9rem;font-size:.98rem}
+.done .btn{margin-top:1.7rem;width:100%}
+
+/* ── Film ───────────────────────────────────────────────────── */
+/* The band bridges the two grounds either side of it: it opens on the
+   rose the hero fades to and closes on the paper section 2 opens with,
+   so the film reads as part of the flow rather than an inserted block. */
+.film{background:linear-gradient(180deg,var(--rose-pale) 0%,var(--paper) 100%)}
+
+/* The film is a 9:16 vertical cut, so it gets a phone-shaped frame
+   rather than a full-width band. aspect-ratio holds the space before
+   metadata arrives, so nothing jumps as it loads. */
+.film-frame{
+  width:min(360px,74vw);
+  margin:clamp(2rem,4vw,2.75rem) auto 0;
+  border-radius:22px;overflow:hidden;
+  background:var(--maroon);
+  box-shadow:0 2px 6px rgba(80,7,17,.09),0 30px 70px -30px rgba(80,7,17,.5);
+}
+.film-frame video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:var(--maroon)}
+
+/* ── Sticky mobile CTA ──────────────────────────────────────── */
+.sticky{
+  position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;
+  padding:.7rem var(--pad) calc(.7rem + env(safe-area-inset-bottom));
+  background:rgba(255,253,251,.94);backdrop-filter:saturate(150%) blur(12px);
+  border-top:1px solid var(--rose-hair);
+  transform:translateY(120%);transition:transform .45s var(--ease);
+}
+.sticky.show{transform:none}
+.sticky .btn{width:100%;min-height:54px;box-shadow:none}
+.sticky .sub{display:block;text-align:center;font-size:.72rem;color:var(--stone-soft);margin-top:.4rem}
+@media (max-width:900px){
+  .sticky{display:block}
+  /* Reserve the bar's height inside the footer rather than under the
+     body, so the page does not end on a strip of bare background. */
+  .foot{padding-bottom:calc(clamp(2.5rem,5vw,3.5rem) + 5.5rem)}
+}
+
+/* ── Narrow screens ─────────────────────────────────────────── */
+@media (max-width:640px){
+  /* The promise reads as three lines, never as a wrapped row with an
+     orphaned dot leading the second line. */
+  .promise{flex-direction:column;align-items:flex-start;gap:.4rem}
+  .promise .dot{display:none}
+  .promise.stacked{align-items:center}
+  .promise.stacked .dot{display:block}
+
+  .hero-cta{gap:.75rem}
+  .hero-cta .btn{width:100%}
+  /* Neither row survives one phone line intact, and a half-wrapped row
+     leaves a divider dangling at the end of it. Both stack instead. */
+  .hero-meta{gap:.75rem}
+  .meta-row{flex-direction:column;align-items:flex-start;gap:.3rem}
+  .meta-row .sep{display:none}
+  /* The live dot pins beside the first line rather than taking a row. */
+  .meta-row:first-child{position:relative;padding-left:1.05rem}
+  .meta-row:first-child .live-dot{position:absolute;left:0;top:.45rem}
+  /* The three steps turn the corner rather than wrapping mid-sequence. */
+  .journey{flex-direction:column;gap:.55rem}
+  .journey .arw2{transform:rotate(90deg);line-height:1}
+}
+
+/* ── Motion off ─────────────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rv{opacity:1;transform:none}
+  .accent{background-size:100% .19em}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ Nav ══════════════════════════════════════════════════ -->
+<header class="nav" id="nav">
+  <div class="shell nav-in">
+    <a class="brand" href="#top">
+      <img src="assets/logo-heart-mind.png" alt="Heart &amp; Mind" />
+      <span class="brand-tag">Live Session</span>
+    </a>
+    <a class="btn" href="#register">Reserve Your Spot <span class="arw">&rarr;</span></a>
+  </div>
+</header>
+
+<!-- ══ 1 · Hero ═════════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="atmos" aria-hidden="true">
+    <span class="aura a1"></span>
+    <span class="aura a2"></span>
+    <span class="aura a3"></span>
+    <svg class="ripples" viewBox="0 0 400 400">
+      <circle cx="200" cy="200" r="196" />
+      <circle cx="200" cy="200" r="196" />
+      <circle cx="200" cy="200" r="196" />
+      <circle cx="200" cy="200" r="196" />
+      <circle cx="200" cy="200" r="196" />
+    </svg>
+  </div>
+
+  <div class="shell hero-in">
+    <p class="eyebrow rv">A 90-Minute Live Online Session</p>
+
+    <h1 class="h-hero rv d1">
+      Sometimes, the Situation Is&nbsp;Over.<br />
+      <span class="accent">But the Emotion Is Still&nbsp;There.</span>
+    </h1>
+
+    <div class="promise rv d2">
+      <span>Healing the Past.</span><i class="dot"></i>
+      <span>Transforming the Present.</span><i class="dot"></i>
+      <span>Creating Your Future.</span>
+    </div>
+
+    <p class="lede rv d3">
+      A situation ends. Life moves on. But something inside still responds —
+      in the way you think, the way you react, the way you carry ordinary days.
+      This is a quiet, guided space to understand what you are still carrying,
+      and why it still speaks.
+    </p>
+
+    <div class="hero-cta rv d4">
+      <a class="btn btn-lg" href="#register">Reserve Your Spot <span class="arw">&rarr;</span></a>
+      <a class="btn btn-quiet" href="#session">See What We Will Explore</a>
+    </div>
+
+    <div class="hero-meta rv d5">
+      <p class="meta-row">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span>Live Online Session</span>
+        <span class="sep" aria-hidden="true"></span>
+        <span>90 Minutes</span>
+        <span class="sep" aria-hidden="true"></span>
+        <span class="muted">Limited seats</span>
+      </p>
+      <!-- EDIT: session date and time -->
+      <p class="meta-row meta-facts">
+        <span><b>Date:</b> 19 Sep 2026</span>
+        <span class="sep" aria-hidden="true"></span>
+        <span><b>Time:</b> 5:00 PM – 6:30 PM</span>
+        <span class="sep" aria-hidden="true"></span>
+        <span><b>Duration:</b> 90 Minutes</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 1b · Film ════════════════════════════════════════════ -->
+<section class="band film" id="film">
+  <div class="shell center">
+    <p class="eyebrow center rv">A Short Film</p>
+    <div class="film-frame rv d1">
+      <video controls playsinline preload="metadata" poster="">
+        <source src="assets/session-film.mp4" type="video/mp4" />
+        Your browser does not support embedded video.
+      </video>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 2 · Relatability ═════════════════════════════════════ -->
+<section class="band b-paper" id="familiar">
+  <div class="shell">
+    <p class="eyebrow rv">Does this feel familiar?</p>
+    <h2 class="h-sec rv d1" style="margin-top:1.25rem;max-width:16ch">
+      You may not have words for it yet.
+    </h2>
+
+    <div class="ask">
+      <div class="ask-row rv"><span class="n">01</span><p>Overthinking a lot at night?</p></div>
+      <div class="ask-row rv"><span class="n">02</span><p>Suddenly feeling emotionally heavy?</p></div>
+      <div class="ask-row rv"><span class="n">03</span><p>Feeling like something doesn&rsquo;t feel right?</p></div>
+      <div class="ask-row rv"><span class="n">04</span><p>Reacting more strongly than the moment deserves?</p></div>
+      <div class="ask-row rv"><span class="n">05</span><p>Holding it together outside, and quietly tired inside?</p></div>
+      <div class="ask-row rv"><span class="n">06</span><p>Watching the same pattern repeat, without knowing why?</p></div>
+    </div>
+
+    <div class="ask-close rv">
+      <p class="q">&ldquo;Yes&hellip; this sounds like me.&rdquo;</p>
+      <p class="lede" style="margin-top:1rem">
+        If something in that list paused you for a second, you are not broken
+        and you are not alone. You are simply carrying something that has not
+        been looked at yet.
+      </p>
+      <p style="margin-top:2rem">
+        <a class="btn" href="#register">Yes, This Feels Familiar <span class="arw">&rarr;</span></a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 3 · Past & present ═══════════════════════════════════ -->
+<section class="band b-maroon" id="connection">
+  <div class="shell split">
+    <div>
+      <p class="eyebrow on-dark rv">Past &amp; present</p>
+      <h2 class="h-sec rv d1" style="margin-top:1.25rem">
+        The situation ended.<br />The feeling kept&nbsp;going.
+      </h2>
+      <p class="lede rv d2" style="margin-top:1.75rem">
+        An experience can close and still leave something behind. Not as a
+        memory you replay, but as a quiet setting inside you — one that keeps
+        shaping the present long after the past has moved on.
+      </p>
+      <p class="pull rv d3">
+        The past does not stay in the past. It shows up in the present, wearing
+        today&rsquo;s clothes.
+      </p>
+    </div>
+
+    <div>
+      <p class="eyebrow on-dark rv" style="margin-bottom:1.5rem">Where it quietly shows up</p>
+      <ul class="echo">
+        <li class="rv d1">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4a5 5 0 0 0-5 5c0 1.2-.5 2-1 2.7A4 4 0 0 0 9 18h6a4 4 0 0 0 3-6.3c-.5-.7-1-1.5-1-2.7a5 5 0 0 0-5-5Z"/><path d="M10 21h4"/></svg></span>
+          How you think
+        </li>
+        <li class="rv d2">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 13h3l2-5 3 9 2.5-6 1.5 2h4"/></svg></span>
+          How you react
+        </li>
+        <li class="rv d3">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="8" cy="9" r="3"/><circle cx="16.5" cy="14" r="2.5"/><path d="M3 20c.6-2.6 2.6-4 5-4"/><path d="M13 20c.4-1.6 1.8-2.5 3.5-2.5S19.6 18.4 20 20"/></svg></span>
+          How you connect with others
+        </li>
+        <li class="rv d4">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6h7v12H4z"/><path d="M13 6h7v12h-7z"/><path d="M11 12h2"/></svg></span>
+          How you see yourself
+        </li>
+        <li class="rv d5">
+          <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12h4l2.5 6 5-14 2.5 8H21"/></svg></span>
+          How deeply situations affect you
+        </li>
+      </ul>
+      <p class="muted rv d6" style="margin-top:1.5rem;font-size:.95rem">
+        None of this means something is wrong with you. It means something in
+        you is still asking to be understood.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 4 · The session ══════════════════════════════════════ -->
+<section class="band b-linen" id="session">
+  <div class="shell">
+    <div style="max-width:780px">
+      <p class="eyebrow rv">The opportunity</p>
+      <h2 class="h-sec rv d1" style="margin-top:1.25rem">That&rsquo;s Where Understanding Can Begin.</h2>
+      <p class="h-sub rv d2" style="margin-top:1.5rem;color:var(--crimson)">A 90-Minute Guided Live Session</p>
+      <p class="lede rv d3" style="margin-top:1rem">
+        Not a lecture, and not advice. Ninety minutes of guided reflection —
+        a calm, structured space to look at what you carry, understand where it
+        began, and see what becomes possible from here.
+      </p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar rv">
+        <span class="n">01</span>
+        <h3>Understand What You&rsquo;re Carrying</h3>
+        <p>Give a name to the feelings that stayed longer than the situation did — the first step to loosening their hold.</p>
+      </div>
+      <div class="pillar rv d1">
+        <span class="n">02</span>
+        <h3>Look Beyond the Surface</h3>
+        <p>Move past the reaction and notice what sits underneath it. Most of what we feel is not really about the moment.</p>
+      </div>
+      <div class="pillar rv d2">
+        <span class="n">03</span>
+        <h3>Connect Your Past &amp; Present</h3>
+        <p>See how earlier experiences quietly shape today&rsquo;s responses — and why the same patterns keep returning.</p>
+      </div>
+      <div class="pillar rv d3">
+        <span class="n">04</span>
+        <h3>Find a Way Forward</h3>
+        <p>Leave with clarity, language for your own experience, and a gentle, practical direction that is yours to walk.</p>
+      </div>
+    </div>
+
+    <p class="rv" style="margin-top:clamp(2.5rem,5vw,3.25rem)">
+      <a class="btn btn-lg" href="#register">Join the 90-Minute Session <span class="arw">&rarr;</span></a>
+    </p>
+  </div>
+</section>
+
+<!-- ══ 5 · Who this is for ══════════════════════════════════ -->
+<section class="band b-paper hair-top" id="for-you">
+  <div class="shell">
+    <div style="max-width:720px">
+      <p class="eyebrow rv">Who this session is for</p>
+      <h2 class="h-sec rv d1" style="margin-top:1.25rem">This Might Be for You If&hellip;</h2>
+    </div>
+
+    <ul class="checks">
+      <li class="rv"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>You often feel emotionally heavy without a clear reason.</li>
+      <li class="rv d1"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>Your mind replays conversations long after they end.</li>
+      <li class="rv d2"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>The same patterns keep repeating in your relationships.</li>
+      <li class="rv d3"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>Something from the past still feels unfinished.</li>
+      <li class="rv d4"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>You want to understand yourself, not just fix yourself.</li>
+      <li class="rv d5"><span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>You are ready to reflect, gently and without pressure.</li>
+    </ul>
+
+    <p class="lede rv" style="margin-top:clamp(2.25rem,4.5vw,3rem)">
+      You do not need a diagnosis, a crisis, or the right words to attend.
+      Curiosity about your own inner world is enough.
+    </p>
+  </div>
+</section>
+
+<div class="b-linen"><div class="orn" aria-hidden="true"><i></i><i></i><i></i></div></div>
+
+<!-- ══ 6 · Event & registration ═════════════════════════════ -->
+<section class="band b-soft" id="register" style="padding-top:clamp(1rem,3vw,2rem)">
+  <div class="shell">
+    <div class="reg rv d1">
+      <span class="k">Registration Fee</span>
+      <!-- EDIT: price -->
+      <p class="price"><span class="cur">&#8377;</span>499</p>
+      <p class="muted" style="font-size:.94rem">One seat, one live session, 90 minutes with you.</p>
+
+      <!-- EDIT: point href at your payment / registration link -->
+      <a class="btn btn-lg" href="#register" id="reg-cta">Register &amp; Secure My Spot <span class="arw">&rarr;</span></a>
+
+      <p class="secure">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+        Secure Payment &nbsp;•&nbsp; Confirmation After Registration
+      </p>
+
+      <div class="journey">
+        <span class="step"><i>1</i> Registration</span>
+        <span class="arw2" aria-hidden="true">&rarr;</span>
+        <span class="step"><i>2</i> Payment</span>
+        <span class="arw2" aria-hidden="true">&rarr;</span>
+        <span class="step"><i>3</i> Confirmation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 7 · FAQ ══════════════════════════════════════════════ -->
+<section class="band b-paper hair-top" id="faq">
+  <div class="shell">
+    <p class="eyebrow rv">Before you join</p>
+    <h2 class="h-sec rv d1" style="margin-top:1.25rem">Questions, Answered</h2>
+
+    <div class="faq rv d2">
+      <details>
+        <summary>Is this session live? <span class="pm" aria-hidden="true"></span></summary>
+        <div class="ans"><p>Yes. It is a live online session, guided in real time. You are in the room with everyone else, not watching a recording.</p></div>
+      </details>
+      <details>
+        <summary>How long is the session? <span class="pm" aria-hidden="true"></span></summary>
+        <div class="ans"><p>90 minutes, start to finish. We keep to the time so you can plan your evening around it.</p></div>
+      </details>
+      <details>
+        <summary>Who can attend? <span class="pm" aria-hidden="true"></span></summary>
+        <div class="ans"><p>Anyone above 18 who feels something from the past is still shaping the present. You do not need a diagnosis or a crisis to be here — curiosity is enough.</p></div>
+      </details>
+      <details>
+        <summary>Do I need previous knowledge? <span class="pm" aria-hidden="true"></span></summary>
+        <div class="ans"><p>None at all. Everything is explained in plain language as we go. You only need a quiet 90 minutes and an open mind.</p></div>
+      </details>
+      <details>
+        <summary>Will I receive joining details? <span class="pm" aria-hidden="true"></span></summary>
+        <div class="ans"><p>Yes. Once your registration and payment are confirmed, the joining link and a short reminder are sent to you before the session begins.</p></div>
+      </details>
+      <details>
+        <summary>Is this a replacement for therapy? <span class="pm" aria-hidden="true"></span></summary>
+        <div class="ans"><p>No. This is an educational and reflective session, not therapy or clinical treatment. It can help you understand yourself better and decide what kind of support, if any, you would like next. If you are in distress or need urgent care, please reach out to a qualified mental health professional.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ══ 8 · Final CTA ════════════════════════════════════════ -->
+<section class="final b-maroon" id="final">
+  <span class="glow" aria-hidden="true"></span>
+  <div class="shell tight final-in">
+    <p class="eyebrow on-dark center rv">One decision</p>
+    <h2 class="h-sec rv d1" style="margin-top:1.5rem">
+      Your Past Is Part of Your Story.<br />
+      But It Doesn&rsquo;t Have to Control What Comes&nbsp;Next.
+    </h2>
+
+    <div class="pause rv d2">
+      <b>Give yourself 90 minutes.</b>
+      <span>To pause.</span>
+      <span>To reflect.</span>
+      <span>To understand.</span>
+    </div>
+
+    <div class="promise stacked rv d3" style="margin-top:clamp(2.5rem,5vw,3.25rem)">
+      <span>Healing the Past.</span><i class="dot"></i>
+      <span>Transforming the Present.</span><i class="dot"></i>
+      <span>Creating Your Future.</span>
+    </div>
+
+    <p class="rv d4" style="margin-top:clamp(2.5rem,5vw,3.25rem)">
+      <a class="btn btn-lg btn-rose" href="#register">Yes, I Want to Join <span class="arw">&rarr;</span></a>
+    </p>
+    <p class="cta-note rv d5">Reserve your spot for the live 90-minute session.</p>
+  </div>
+</section>
+
+<!-- ══ Footer ═══════════════════════════════════════════════ -->
+<footer class="foot">
+  <div class="shell foot-in">
+    <a class="brand" href="#top">
+      <img src="assets/logo-heart-mind.png" alt="Heart &amp; Mind" />
+      <span class="brand-tag">Restoring balance, one soul at a time</span>
+    </a>
+    <p class="note">
+      This live session is educational and reflective in nature. It is not a
+      substitute for therapy, diagnosis, or clinical treatment.
+    </p>
+  </div>
+</footer>
+
+<!-- ══ Reservation form ═════════════════════════════════════ -->
+<div class="modal" id="modal" hidden>
+  <div class="modal-veil" data-close></div>
+
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-x" type="button" data-close aria-label="Close">&times;</button>
+
+    <div id="view-form">
+      <p class="eyebrow">Reserve your spot</p>
+      <h2 class="modal-h" id="modal-title">Hold My Seat</h2>
+      <!-- EDIT: keep in step with the event details above -->
+      <p class="modal-meta">19 Sep 2026 &nbsp;·&nbsp; 5:00 PM – 6:30 PM &nbsp;·&nbsp; 90 minutes &nbsp;·&nbsp; &#8377;499</p>
+
+      <form id="reg-form" novalidate>
+        <label class="fld" for="f-name">
+          <span>Name</span>
+          <input id="f-name" name="name" type="text" autocomplete="name" placeholder="Your name" required />
+          <em class="err">Please enter your name.</em>
+        </label>
+
+        <label class="fld" for="f-age">
+          <span>Age</span>
+          <input id="f-age" name="age" type="text" inputmode="numeric" autocomplete="off" placeholder="Your age" required />
+          <em class="err">Please enter a valid age (18 or above).</em>
+        </label>
+
+        <label class="fld" for="f-sex">
+          <span>Sex</span>
+          <select id="f-sex" name="sex" required>
+            <option value="" selected disabled>Select an option</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+          </select>
+          <em class="err">Please choose an option.</em>
+        </label>
+
+        <label class="fld" for="f-phone">
+          <span>Phone Number</span>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="10-digit mobile number" required />
+          <em class="err">Please enter a valid phone number.</em>
+        </label>
+
+        <button class="btn" type="submit" id="reg-submit">Submit Reservation <span class="arw">&rarr;</span></button>
+        <p class="form-err" id="form-err">Something went wrong. Please try again.</p>
+
+        <p class="secure">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          Secure Payment &nbsp;•&nbsp; Confirmation After Registration
+        </p>
+      </form>
+    </div>
+
+    <div id="view-done" class="done" hidden>
+      <div class="done-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5"/></svg>
+      </div>
+      <h2 class="modal-h" tabindex="-1" id="done-title">Your spot has been reserved successfully!</h2>
+      <p class="muted">
+        We&rsquo;ve saved your seat for the live 90-minute session on
+        19 Sep 2026. Your joining link and payment details will reach you
+        by email shortly.
+      </p>
+      <button class="btn" type="button" data-close>Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ Sticky mobile CTA ════════════════════════════════════ -->
+<div class="sticky" id="sticky">
+  <a class="btn" href="#register">Reserve Your Spot <span class="arw">&rarr;</span></a>
+  <span class="sub">Live Online Session &nbsp;•&nbsp; 90 Minutes</span>
+</div>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Gentle fade-in on scroll. */
+  var items = document.querySelectorAll('.rv');
+  if (reduce || !('IntersectionObserver' in window)) {
+    items.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Nav hairline appears once the hero starts to leave. */
+  var nav = document.getElementById('nav');
+  var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 24); };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* Sticky CTA: shows after the hero, hides over the registration and
+     final sections so it never sits on top of the thing it points to. */
+  var sticky = document.getElementById('sticky');
+  var hero = document.getElementById('top');
+  var mq = window.matchMedia('(max-width: 900px)');
+  var pastHero = false, overTarget = false;
+
+  var sync = function () {
+    var on = mq.matches;
+    sticky.classList.toggle('show', on && pastHero && !overTarget);
+  };
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (e) {
+      pastHero = !e[0].isIntersecting; sync();
+    }, { threshold: 0 }).observe(hero);
+
+    var guard = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.dataset.vis = '1'; }
+        else { delete e.target.dataset.vis; }
+      });
+      overTarget = !!document.querySelector('#register[data-vis], #final[data-vis]');
+      sync();
+    }, { threshold: 0 });
+    guard.observe(document.getElementById('register'));
+    guard.observe(document.getElementById('final'));
+  }
+  (mq.addEventListener ? mq.addEventListener('change', sync) : mq.addListener(sync));
+  sync();
+
+  /* ── Reservation form ──────────────────────────────────────────
+     One journey for every CTA: Registration -> Payment -> Confirmation.
+
+     RESERVATION_ENDPOINT is where a submitted reservation is POSTed as
+     JSON ({name, email, phone, session}). While it is empty the form
+     validates and confirms in the browser but STORES NOTHING — set it to
+     your form handler or booking API to actually capture reservations.
+
+     REGISTRATION_URL is the alternative: set it to a hosted checkout or
+     booking page and every CTA opens that link instead of this form. */
+  var RESERVATION_ENDPOINT = '';
+  var REGISTRATION_URL = '';
+
+  var modal = document.getElementById('modal');
+  var card = modal.querySelector('.modal-card');
+  var form = document.getElementById('reg-form');
+  var viewForm = document.getElementById('view-form');
+  var viewDone = document.getElementById('view-done');
+  var submitBtn = document.getElementById('reg-submit');
+  var formErr = document.getElementById('form-err');
+  var lastFocus = null;
+
+  var FOCUSABLE = 'a[href],button:not([disabled]),input,select,textarea,[tabindex]:not([tabindex="-1"])';
+
+  function openModal() {
+    lastFocus = document.activeElement;
+    /* Always reopen on the form, never on a stale confirmation. */
+    viewDone.hidden = true;
+    viewForm.hidden = false;
+    formErr.classList.remove('show');
+    modal.hidden = false;
+    document.documentElement.style.overflow = 'hidden';
+    requestAnimationFrame(function () {
+      modal.classList.add('open');
+      var first = form.querySelector('input');
+      if (first) first.focus({ preventScroll: true });
+    });
+  }
+
+  function closeModal() {
+    modal.classList.remove('open');
+    document.documentElement.style.overflow = '';
+    var done = function () {
+      modal.hidden = true;
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    };
+    if (reduce) done();
+    else setTimeout(done, 320);
+  }
+
+  /* Every registration CTA on the page opens the same form. */
+  document.querySelectorAll('a[href="#register"], #reg-cta').forEach(function (a) {
+    if (REGISTRATION_URL) {
+      a.setAttribute('href', REGISTRATION_URL);
+      a.setAttribute('rel', 'noopener');
+      return;
+    }
+    a.addEventListener('click', function (e) { e.preventDefault(); openModal(); });
+  });
+
+  modal.querySelectorAll('[data-close]').forEach(function (el) {
+    el.addEventListener('click', closeModal);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (modal.hidden) return;
+    if (e.key === 'Escape') { closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    /* Keep focus inside the dialog while it is open. */
+    var items = Array.prototype.filter.call(card.querySelectorAll(FOCUSABLE), function (el) {
+      return el.offsetParent !== null;
+    });
+    if (!items.length) return;
+    var first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* MIN_AGE matches the "who can attend" answer in the FAQ — change both
+     together if the session opens to under-18s. */
+  var MIN_AGE = 18;
+
+  var checks = {
+    name: function (v) { return v.trim().length >= 2; },
+    age: function (v) {
+      if (!/^\d{1,3}$/.test(v.trim())) return false;
+      var n = parseInt(v, 10);
+      return n >= MIN_AGE && n <= 100;
+    },
+    sex: function (v) { return v !== ''; },
+    /* 10 digits for an Indian mobile, up to 15 to allow a country code. */
+    phone: function (v) {
+      var d = v.replace(/\D/g, '');
+      return d.length >= 10 && d.length <= 15;
+    },
+  };
+
+  function validate(field) {
+    var ok = checks[field.name](field.value);
+    field.closest('.fld').classList.toggle('invalid', !ok);
+    return ok;
+  }
+
+  form.querySelectorAll('input, select').forEach(function (field) {
+    /* Complain only once a field has been touched, never while typing
+       the first character. */
+    field.addEventListener('blur', function () { if (field.value) validate(field); });
+    field.addEventListener('change', function () { if (field.value) validate(field); });
+    field.addEventListener('input', function () {
+      if (field.closest('.fld').classList.contains('invalid')) validate(field);
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    formErr.classList.remove('show');
+
+    var fields = Array.prototype.slice.call(form.querySelectorAll('input, select'));
+    var bad = fields.filter(function (f) { return !validate(f); });
+    if (bad.length) { bad[0].focus(); return; }
+
+    var payload = {
+      name: form.elements.name.value.trim(),
+      age: parseInt(form.elements.age.value, 10),
+      sex: form.elements.sex.value,
+      phone: form.elements.phone.value.trim(),
+      session: '19 Sep 2026, 5:00 PM - 6:30 PM',
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Reserving…';
+
+    var finish = function () {
+      viewForm.hidden = true;
+      viewDone.hidden = false;
+      document.getElementById('done-title').focus({ preventScroll: true });
+      card.scrollTop = 0;
+      form.reset();
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Submit Reservation <span class="arw">→</span>';
+      fields.forEach(function (f) { f.closest('.fld').classList.remove('invalid'); });
+    };
+
+    if (!RESERVATION_ENDPOINT) { finish(); return; }
+
+    fetch(RESERVATION_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); return r; })
+      .then(finish)
+      .catch(function () {
+        formErr.classList.add('show');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Submit Reservation <span class="arw">→</span>';
+      });
+  });
+})();
+</script>
+</body>
+</html>
