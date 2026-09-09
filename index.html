@@ -155,10 +155,16 @@ section{position:relative}
   box-shadow:0 1px 2px rgba(80,7,17,.16),0 12px 28px -12px rgba(80,7,17,.45);
   transition:background-color .25s var(--ease),transform .25s var(--ease),box-shadow .25s var(--ease);
 }
-.btn .arw{transition:transform .3s var(--ease)}
-.btn:hover{background:var(--crimson-deep);transform:translateY(-2px);box-shadow:0 2px 4px rgba(80,7,17,.18),0 20px 38px -14px rgba(80,7,17,.5)}
-.btn:hover .arw{transform:translateX(4px)}
-.btn:active{transform:translateY(0)}
+/* Buttons never move. The arrow travels and the fill deepens; the
+   button box itself stays exactly where it sits, so nothing shifts
+   under the cursor as it approaches. */
+.btn .arw{transition:transform .35s var(--ease)}
+.btn:hover{
+  background:var(--crimson-deep);
+  box-shadow:0 2px 4px rgba(80,7,17,.18),0 20px 38px -14px rgba(80,7,17,.5);
+}
+.btn:hover .arw{transform:translateX(6px)}
+.btn:active{box-shadow:0 1px 2px rgba(80,7,17,.2),0 8px 18px -10px rgba(80,7,17,.45)}
 .btn-lg{min-height:64px;padding:1.15rem 2.5rem;font-size:1.08rem}
 .btn-rose{background:var(--rose);color:var(--maroon);box-shadow:0 12px 34px -14px rgba(0,0,0,.55)}
 .btn-rose:hover{background:var(--rose-lift);box-shadow:0 20px 44px -16px rgba(0,0,0,.6)}
@@ -171,13 +177,27 @@ section{position:relative}
 .b-maroon .cta-note{color:rgba(237,155,189,.6)}
 
 /* ── Nav ────────────────────────────────────────────────────── */
+/* White at rest, brand red once the page starts moving. Everything
+   inside is themed off .scrolled so the whole bar changes as one. */
 .nav{
   position:sticky;top:0;z-index:60;
-  background:rgba(245,241,235,.85);backdrop-filter:saturate(140%) blur(10px);
+  background:rgba(255,255,255,.92);backdrop-filter:saturate(140%) blur(10px);
   border-bottom:1px solid transparent;
-  transition:border-color .35s var(--ease),background-color .35s var(--ease);
+  transition:border-color .45s var(--ease),background-color .45s var(--ease);
 }
-.nav.scrolled{border-bottom-color:var(--rule);background:rgba(245,241,235,.95)}
+.nav.scrolled{
+  background:var(--crimson);
+  border-bottom-color:rgba(255,255,255,.16);
+  box-shadow:0 10px 30px -18px rgba(80,7,17,.55);
+}
+/* The mark is maroon on rose; on red it needs a ring to stay separate. */
+.nav .brand img{transition:box-shadow .45s var(--ease)}
+.nav.scrolled .brand img{box-shadow:0 0 0 1px rgba(255,255,255,.42)}
+.nav .brand-tag{transition:color .45s var(--ease),border-color .45s var(--ease)}
+.nav.scrolled .brand-tag{color:rgba(255,255,255,.82);border-left-color:rgba(255,255,255,.3)}
+/* The CTA inverts so it still reads as the action on a red bar. */
+.nav.scrolled .btn{background:#fff;color:var(--crimson)}
+.nav.scrolled .btn:hover{background:var(--linen);color:var(--crimson-deep)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:66px}
 /* The wordmark already reads "Heart and Mind", so the lockup pairs it
    with context rather than repeating the name in type. */
@@ -208,6 +228,10 @@ section{position:relative}
 .meta-row .sep{width:1px;height:14px;background:var(--rose-hair);flex:none}
 .meta-facts{color:var(--stone)}
 .meta-facts b{font-weight:600;color:var(--maroon)}
+/* Emoji sit on their own baseline; nudged so they align with the label
+   rather than riding high, and never italic despite the <i>. */
+.emo{font-style:normal;margin-right:.4rem;font-size:.95em;line-height:1;
+  display:inline-block;vertical-align:-.06em}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--crimson);position:relative;flex:none}
 .live-dot::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--crimson);animation:pulse 3.4s var(--ease) infinite}
 @keyframes pulse{0%{transform:scale(.55);opacity:.6}70%{transform:scale(1.3);opacity:0}100%{opacity:0}}
@@ -223,6 +247,42 @@ section{position:relative}
 .aura.a3{width:26vw;height:26vw;min-width:200px;min-height:200px;left:-9vw;bottom:4vw;
   background:radial-gradient(circle,rgba(176,4,26,.12) 0%,rgba(176,4,26,0) 70%);animation-delay:-3.5s}
 @keyframes breathe{from{transform:scale(1) translateY(0)}to{transform:scale(1.12) translateY(-14px)}}
+
+/* Circular film well, centred on the ripple rings. Anything inside is
+   clipped to the circle, so a 9:16 or 16:9 source both fill it cleanly. */
+/* Low and right, inside the outer ripple but clear of the headline,
+   which runs almost the full width of the shell on wide screens. */
+.hero-orb{
+  position:absolute;right:1vw;bottom:2vw;
+  width:min(34vw,360px);height:min(34vw,360px);
+  display:grid;place-items:center;pointer-events:none;
+}
+.orb{
+  /* Dark ground: the mind is drawn in white line, which needs one. */
+  position:relative;width:100%;aspect-ratio:1;border-radius:50%;overflow:hidden;
+  display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 38%,#6a0f1f 0%,var(--maroon) 62%,#3d0510 100%);
+  box-shadow:0 2px 4px rgba(80,7,17,.06),0 30px 70px -34px rgba(80,7,17,.45),
+             inset 0 0 0 1px rgba(237,155,189,.55);
+}
+/* The illustration is wider than it is tall, so it is centred and held
+   to the width that fits inside the circle rather than stretched to it. */
+.orb-draw{position:relative;width:76%;height:auto;overflow:visible}
+.orb-video{position:absolute;inset:0;width:100%;height:100%}
+.orb-video{object-fit:cover;opacity:0;transition:opacity .8s var(--ease)}
+.orb.has-video .orb-video{opacity:1}
+.orb.has-video .orb-draw{opacity:0;transition:opacity .8s var(--ease)}
+
+/* Each stroke draws itself in turn and stays drawn. Looping it meant the
+   staggered strokes also cleared out of step, leaving the circle showing
+   a fragment for seconds at a time; instead the drawing replays whenever
+   the hero comes back into view, like the titles do. */
+/* --len and the per-stroke delay are measured and set in script, since
+   hand-drawn paths have no predictable length. */
+.dr{stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300)}
+.orb.draw-in .dr{animation:dr-draw 1.4s var(--ease) both}
+@keyframes dr-draw{to{stroke-dashoffset:0}}
+@media (max-width:900px){.hero-orb{display:none}}
 
 .ripples{position:absolute;right:-5vw;top:1vw;width:min(56vw,700px);height:min(56vw,700px);opacity:.6}
 .ripples circle{fill:none;stroke:var(--rose);stroke-width:1;transform-origin:center;animation:widen 9s var(--ease) infinite}
@@ -316,8 +376,21 @@ section{position:relative}
   box-shadow:0 1px 2px rgba(80,7,17,.04),0 26px 60px -34px rgba(80,7,17,.35);
   position:relative;overflow:hidden;
 }
-.reg::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;
+.reg::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;z-index:2;
   background:linear-gradient(90deg,var(--rose) 0%,var(--crimson) 50%,var(--gold) 100%);opacity:.85}
+
+/* Red bleeds in from whichever edge the cursor is nearest. The script
+   sets --ang (which side it comes from) and --amt (how far in), so the
+   wash follows the cursor around the card rather than snapping between
+   four fixed states. It sits under the content, never over it. */
+.reg-glow{
+  position:absolute;inset:0;z-index:0;pointer-events:none;border-radius:inherit;
+  background:linear-gradient(var(--ang,180deg),
+    rgba(176,4,26,.5) 0%,rgba(176,4,26,.26) 26%,rgba(176,4,26,0) 68%);
+  opacity:0;transition:opacity .5s var(--ease);
+}
+.reg.lit .reg-glow{opacity:var(--amt,0)}
+.reg > :not(.reg-glow){position:relative;z-index:1}
 .reg .k{font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--stone-soft)}
 .price{font-family:var(--font-display);font-weight:800;color:var(--maroon);
   font-size:clamp(2.9rem,7vw,4.1rem);line-height:1;letter-spacing:-.04em;margin:.55rem 0 .35rem}
@@ -360,12 +433,31 @@ section{position:relative}
 @keyframes fadein{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
 
 /* ── Section 8 · Final ──────────────────────────────────────── */
-.final{position:relative;overflow:hidden;text-align:center;
-  padding-block:clamp(5rem,11vw,8.5rem)}
-.final .glow{position:absolute;left:50%;top:-10%;width:min(90vw,780px);height:min(90vw,780px);
-  transform:translateX(-50%);border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle,rgba(237,155,189,.15) 0%,rgba(237,155,189,0) 68%);
-  animation:breathe 19s var(--ease) infinite alternate}
+.final{
+  position:relative;overflow:hidden;text-align:center;
+  padding-block:clamp(5rem,11vw,8.5rem);
+  /* A red ground rather than the flat maroon used elsewhere. */
+  background:radial-gradient(120% 95% at 50% 12%,#7d0d1e 0%,#5a0916 46%,#3c0510 100%);
+  box-shadow:inset 0 0 clamp(80px,14vw,190px) rgba(176,4,26,.5);
+}
+
+/* Heart-shaped shadow. The waves inside it slide at three different
+   speeds; the blur turns the whole thing from a graphic into a glow, so
+   what reads is a soft red heart that keeps moving. */
+.heart-shadow{
+  position:absolute;left:50%;top:52%;translate:-50% -50%;
+  width:min(104vw,780px);aspect-ratio:22/17.6;
+  pointer-events:none;opacity:.62;
+  filter:blur(16px);
+}
+.heart-shadow svg{width:100%;height:100%;display:block;overflow:visible}
+.hw{transform-box:view-box}
+.hw1{fill:#ab1c34;animation:hw-flow 13s linear infinite}
+.hw2{fill:#cb2b46;opacity:.8;animation:hw-flow 19s linear infinite reverse}
+.hw3{fill:#6f0a1a;opacity:.9;animation:hw-flow 27s linear infinite}
+/* One period of the wave is 16 user units, so a 16-unit slide loops
+   without a seam. */
+@keyframes hw-flow{to{transform:translateX(-16px)}}
 .final-in{position:relative;z-index:2}
 .pause{display:flex;flex-direction:column;gap:.45rem;align-items:center;margin-top:clamp(2.25rem,4.5vw,3rem)}
 .pause span{font-size:1.08rem;color:rgba(237,155,189,.8)}
@@ -467,7 +559,118 @@ section{position:relative}
   background:var(--maroon);
   box-shadow:0 2px 6px rgba(80,7,17,.09),0 30px 70px -30px rgba(80,7,17,.5);
 }
+.film-frame{position:relative}
 .film-frame video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:var(--maroon)}
+
+/* Click target covering the whole frame: play/pause lives here. */
+.film-hit{
+  position:absolute;inset:0;width:100%;border:0;padding:0;cursor:pointer;
+  background:transparent;display:grid;place-items:center;
+  transition:background-color .4s var(--ease);
+}
+.film-hit:hover{background:rgba(45,4,10,.14)}
+.film-play{
+  width:66px;height:66px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(255,255,255,.92);color:var(--crimson);
+  box-shadow:0 10px 30px -12px rgba(0,0,0,.55);
+  transition:opacity .35s var(--ease),transform .35s var(--ease);
+}
+.film-play svg{width:26px;height:26px;fill:currentColor;margin-left:3px}
+.film-hit:hover .film-play{transform:scale(1.06)}
+/* Once it is running the glyph gets out of the way; it returns on
+   hover so the frame never looks inert. */
+.film-frame.playing .film-play{opacity:0;transform:scale(.88)}
+.film-frame.playing .film-hit:hover .film-play{opacity:.92;transform:scale(1)}
+
+.film-mute{
+  position:absolute;right:.75rem;bottom:.75rem;z-index:2;
+  width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;
+  display:grid;place-items:center;
+  background:rgba(45,4,10,.5);backdrop-filter:blur(6px);
+  transition:background-color .3s var(--ease),opacity .3s var(--ease);
+}
+.film-mute:hover{background:rgba(45,4,10,.72)}
+.film-mute svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round}
+.film-mute .ic-off{display:none}
+.film-frame.muted .film-mute .ic-on{display:none}
+.film-frame.muted .film-mute .ic-off{display:block}
+
+/* Steps toward the viewer on hover. Only where a real pointer exists —
+   on touch there is no hover state to leave, so it would stick. */
+@media (hover:hover) and (pointer:fine){
+  .film-frame{
+    transition:transform .55s var(--ease),box-shadow .55s var(--ease);
+    will-change:transform;
+  }
+  .film-frame:hover{
+    transform:scale(1.035) translateY(-8px);
+    box-shadow:0 6px 14px rgba(80,7,17,.12),0 46px 90px -34px rgba(80,7,17,.62);
+    z-index:2;
+  }
+}
+
+/* ── Rainbow title cycle ────────────────────────────────────── */
+/* The heading keeps its normal ink at all times. A clone of it sits on
+   top, painted with a moving rainbow clipped to the glyphs, and only its
+   OPACITY animates — so the return to normal is a true cross-fade rather
+   than a colour swap, which cannot be transitioned smoothly once
+   background-clip:text is involved.
+
+   Each title runs its own single pass when it scrolls into view, so the
+   gap between them is however long the reader takes to get there. The
+   closing title is the exception: it stays lit. */
+:root{
+  /* Mid-toned on light grounds so the lit text keeps its contrast —
+     a literal spectrum washes out to near-white at the yellow. */
+  --rainbow:linear-gradient(90deg,
+    #c92a44,#d9761f,#c99a12,#2c9260,#2f6fc4,#7a45bd,#c74d95,
+    #c92a44,#d9761f,#c99a12,#2c9260,#2f6fc4,#7a45bd,#c74d95,#c92a44);
+}
+/* On the maroon band the same hues would disappear, so they lift. */
+.b-maroon{
+  --rainbow:linear-gradient(90deg,
+    #ff8fa3,#ffbe7d,#ffe08a,#8fe3b4,#93c8ff,#c9adff,#ffa8dc,
+    #ff8fa3,#ffbe7d,#ffe08a,#8fe3b4,#93c8ff,#c9adff,#ffa8dc,#ff8fa3);
+}
+
+[data-rainbow]{position:relative}
+.rainbow-layer{
+  position:absolute;inset:0;
+  pointer-events:none;user-select:none;-webkit-user-select:none;
+  background-image:var(--rainbow);
+  /* Two full spectra at 200% width, so a 100% travel lands exactly one
+     period along and the loop has no seam. */
+  background-size:200% 100%;
+  background-position:100% 50%;
+  -webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;
+  opacity:0;
+}
+/* One pass, added by the observer and cleared when it ends. */
+.rb-play .rainbow-layer{
+  animation:rb-sweep 5.5s linear 1 both,rb-fade 5.5s ease-in-out 1 both;
+}
+/* The closing title holds the effect rather than passing through it. */
+[data-rainbow="always"] .rainbow-layer{
+  opacity:.95;
+  animation:rb-sweep 9s linear infinite;
+}
+
+/* The hero's second line carries its own crimson and rose wash; inside
+   the clone both are dropped so the rainbow reads as one continuous run. */
+.rainbow-layer .accent{
+  background:none;animation:none;
+  color:inherit;-webkit-text-fill-color:transparent;
+}
+
+@keyframes rb-sweep{to{background-position:0% 50%}}
+@keyframes rb-fade{
+  0%{opacity:0}
+  20%{opacity:.95}
+  70%{opacity:.95}
+  100%{opacity:0}
+}
 
 /* ── Sticky mobile CTA ──────────────────────────────────────── */
 .sticky{
@@ -514,9 +717,30 @@ section{position:relative}
 /* ── Motion off ─────────────────────────────────────────────── */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+
+  /* What this preference guards against is things MOVING — the drifting
+     aura, the expanding rings, the reveal slide. Those still go.
+     Excluded from the kill are the pieces that only change colour or
+     draw in place: the rainbow titles, the heart's waves and the line
+     drawing. Naming them in :not() rather than fighting the rule with a
+     second !important keeps each element's own timing intact, including
+     the staggered delays on the drawing strokes. */
+  *:not(.rainbow-layer):not(.hw):not(.dr),
+  *::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+  }
+  /* Hover feedback stays smooth: it is short, deliberately triggered by
+     the visitor, and ends where it started. Snapping it would only make
+     the page feel broken. */
+  *:not(.btn):not(.arw):not(.film-frame):not(.reg-glow),
+  *::before,*::after{
+    transition-duration:.001ms!important;
+  }
   .rv{opacity:1;transform:none}
   .accent{background-size:100% .19em}
+  /* The hero aura and ripples are the genuinely motion-heavy pair. */
+  .aura,.ripples circle{animation:none!important}
 }
 </style>
 </head>
@@ -539,6 +763,56 @@ section{position:relative}
     <span class="aura a1"></span>
     <span class="aura a2"></span>
     <span class="aura a3"></span>
+    <!-- Sits on the centre of the ripple rings. The line drawing plays
+         until a film is dropped in at assets/hero-circle.mp4, at which
+         point the video fades in over it. -->
+    <div class="hero-orb">
+      <div class="orb">
+        <svg class="orb-draw" viewBox="0 0 200 124">
+          <!-- Mind, left, white line -->
+          <g class="ink-mind" fill="none" stroke="#fff" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+            <path class="dr" d="M54 18C37 17 23 25 18 38c-8 6-10 15-4 22-6 8-4 18 4 23 1 9 8 15 17 16 4 7 13 10 21 7 8 5 19 3 25-4 9-1 15-9 14-18 6-7 6-17-1-23 1-11-6-20-17-22C72 22 64 18 54 18Z" />
+            <path class="dr" d="M25 42c9-5 18-2 22 6 3 7 11 10 18 6" />
+            <path class="dr" d="M17 60c9-4 17 0 20 9 2 8 10 12 18 9" />
+            <path class="dr" d="M22 79c8-4 16-1 20 7" />
+            <path class="dr" d="M38 26c8-1 14 4 15 12 1 7 7 11 14 10" />
+            <path class="dr" d="M62 22c6 6 6 14 0 19-5 5-4 12 2 16" />
+            <path class="dr" d="M76 32c-7 3-10 10-6 17 3 6 11 8 17 4" />
+            <path class="dr" d="M60 60c8-2 15 3 16 11 1 7 7 11 14 10" />
+            <path class="dr" d="M44 92c5-6 13-7 19-2" />
+            <path class="dr" d="M66 84c7-3 14 0 17 7" />
+            <!-- cerebellum and stem -->
+            <path class="dr" d="M74 96c9 1 16-4 17-13" />
+            <path class="dr" d="M77 101c6 0 11-3 13-8M79 106c5-1 9-4 11-8" />
+            <path class="dr" d="M62 99c2 8 0 14-6 17" />
+          </g>
+          <!-- Heart, right, red line -->
+          <g class="ink-heart" fill="none" stroke="#e0344f" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+            <path class="dr" d="M145 115c-17-11-27-29-27-49 0-12 7-20 17-21 5-6 14-8 21-4 7-6 18-4 23 4 10 5 14 18 9 29-4 18-18 33-36 42-2 1-5 1-7-1Z" />
+            <!-- aortic arch, drawn as a tube: two parallel walls -->
+            <path class="dr" d="M158 41c-1-13 3-23 12-27 9-4 17 2 16 12-1 8-5 14-6 20" />
+            <path class="dr" d="M165 43c-1-11 2-18 8-21 6-3 10 1 9 8-1 6-4 11-4 16" />
+            <!-- pulmonary artery, crossing in front to the left -->
+            <path class="dr" d="M137 47c-4-11-10-19-19-23" />
+            <path class="dr" d="M144 44c-3-10-9-17-17-21" />
+            <!-- superior vena cava -->
+            <path class="dr" d="M181 52c5-8 6-18 3-26" />
+            <!-- anterior interventricular groove -->
+            <path class="dr" d="M139 57c10 8 15 21 13 35-1 8-4 15-9 21" />
+            <!-- atrioventricular groove -->
+            <path class="dr" d="M128 63c11 6 23 4 32-4" />
+            <!-- coronary branches -->
+            <path class="dr" d="M164 68c6 7 8 17 4 26-2 6-6 11-11 14" />
+            <path class="dr" d="M129 78c7 4 11 11 11 20" />
+            <path class="dr" d="M172 57c4 6 5 13 3 20" />
+          </g>
+        </svg>
+        <video class="orb-video" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+      </div>
+    </div>
+
     <svg class="ripples" viewBox="0 0 400 400">
       <circle cx="200" cy="200" r="196" />
       <circle cx="200" cy="200" r="196" />
@@ -551,7 +825,7 @@ section{position:relative}
   <div class="shell hero-in">
     <p class="eyebrow rv">A 90-Minute Live Online Session</p>
 
-    <h1 class="h-hero rv d1">
+    <h1 class="h-hero rv d1" data-rainbow="a">
       Sometimes, the Situation Is&nbsp;Over.<br />
       <span class="accent">But the Emotion Is Still&nbsp;There.</span>
     </h1>
@@ -585,11 +859,11 @@ section{position:relative}
       </p>
       <!-- EDIT: session date and time -->
       <p class="meta-row meta-facts">
-        <span><b>Date:</b> 19 Sep 2026</span>
+        <span><i class="emo" aria-hidden="true">📅</i><b>Date:</b> 19 Sep 2026</span>
         <span class="sep" aria-hidden="true"></span>
-        <span><b>Time:</b> 5:00 PM – 6:30 PM</span>
+        <span><i class="emo" aria-hidden="true">🕔</i><b>Time:</b> 5:00 PM – 6:30 PM</span>
         <span class="sep" aria-hidden="true"></span>
-        <span><b>Duration:</b> 90 Minutes</span>
+        <span><i class="emo" aria-hidden="true">⏱️</i><b>Duration:</b> 90 Minutes</span>
       </p>
     </div>
   </div>
@@ -599,11 +873,32 @@ section{position:relative}
 <section class="band film" id="film">
   <div class="shell center">
     <p class="eyebrow center rv">A Short Film</p>
+    <!-- No native controls: they bring a progress bar, fullscreen,
+         download and picture-in-picture with them. Play/pause is the
+         video itself, and mute is the only control shown. -->
     <div class="film-frame rv d1">
-      <video controls playsinline preload="metadata" poster="">
+      <video id="film-video" playsinline preload="metadata">
         <source src="assets/session-film.mp4" type="video/mp4" />
         Your browser does not support embedded video.
       </video>
+
+      <button class="film-hit" type="button" id="film-toggle" aria-label="Play the film">
+        <span class="film-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" /></svg>
+        </span>
+      </button>
+
+      <button class="film-mute" type="button" id="film-mute" aria-label="Mute">
+        <svg class="ic-on" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" />
+          <path d="M15.5 9a4 4 0 0 1 0 6" />
+          <path d="M18 6.5a7.5 7.5 0 0 1 0 11" />
+        </svg>
+        <svg class="ic-off" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" />
+          <path d="m16 9.5 5 5M21 9.5l-5 5" />
+        </svg>
+      </button>
     </div>
   </div>
 </section>
@@ -612,7 +907,7 @@ section{position:relative}
 <section class="band b-paper" id="familiar">
   <div class="shell">
     <p class="eyebrow rv">Does this feel familiar?</p>
-    <h2 class="h-sec rv d1" style="margin-top:1.25rem;max-width:16ch">
+    <h2 class="h-sec rv d1" data-rainbow="a" style="margin-top:1.25rem;max-width:16ch">
       You may not have words for it yet.
     </h2>
 
@@ -644,7 +939,7 @@ section{position:relative}
   <div class="shell split">
     <div>
       <p class="eyebrow on-dark rv">Past &amp; present</p>
-      <h2 class="h-sec rv d1" style="margin-top:1.25rem">
+      <h2 class="h-sec rv d1" data-rainbow="a" style="margin-top:1.25rem">
         The situation ended.<br />The feeling kept&nbsp;going.
       </h2>
       <p class="lede rv d2" style="margin-top:1.75rem">
@@ -695,7 +990,7 @@ section{position:relative}
   <div class="shell">
     <div style="max-width:780px">
       <p class="eyebrow rv">The opportunity</p>
-      <h2 class="h-sec rv d1" style="margin-top:1.25rem">That&rsquo;s Where Understanding Can Begin.</h2>
+      <h2 class="h-sec rv d1" data-rainbow="b" style="margin-top:1.25rem">That&rsquo;s Where Understanding Can Begin.</h2>
       <p class="h-sub rv d2" style="margin-top:1.5rem;color:var(--crimson)">A 90-Minute Guided Live Session</p>
       <p class="lede rv d3" style="margin-top:1rem">
         Not a lecture, and not advice. Ninety minutes of guided reflection —
@@ -738,7 +1033,7 @@ section{position:relative}
   <div class="shell">
     <div style="max-width:720px">
       <p class="eyebrow rv">Who this session is for</p>
-      <h2 class="h-sec rv d1" style="margin-top:1.25rem">This Might Be for You If&hellip;</h2>
+      <h2 class="h-sec rv d1" data-rainbow="b" style="margin-top:1.25rem">This Might Be for You If&hellip;</h2>
     </div>
 
     <ul class="checks">
@@ -763,9 +1058,10 @@ section{position:relative}
 <section class="band b-soft" id="register" style="padding-top:clamp(1rem,3vw,2rem)">
   <div class="shell">
     <div class="reg rv d1">
+      <span class="reg-glow" aria-hidden="true"></span>
       <span class="k">Registration Fee</span>
       <!-- EDIT: price -->
-      <p class="price"><span class="cur">&#8377;</span>499</p>
+      <p class="price"><span class="cur">&#8377;</span><span id="price-num" data-to="199">199</span></p>
       <p class="muted" style="font-size:.94rem">One seat, one live session, 90 minutes with you.</p>
 
       <!-- EDIT: point href at your payment / registration link -->
@@ -791,7 +1087,7 @@ section{position:relative}
 <section class="band b-paper hair-top" id="faq">
   <div class="shell">
     <p class="eyebrow rv">Before you join</p>
-    <h2 class="h-sec rv d1" style="margin-top:1.25rem">Questions, Answered</h2>
+    <h2 class="h-sec rv d1" data-rainbow="b" style="margin-top:1.25rem">Questions, Answered</h2>
 
     <div class="faq rv d2">
       <details>
@@ -824,10 +1120,28 @@ section{position:relative}
 
 <!-- ══ 8 · Final CTA ════════════════════════════════════════ -->
 <section class="final b-maroon" id="final">
-  <span class="glow" aria-hidden="true"></span>
+  <!-- The shadow behind the closing line is the brand heart, filled with
+       slow waves so it reads as something moving rather than a sticker. -->
+  <div class="heart-shadow" aria-hidden="true">
+    <!-- viewBox is cropped to the heart's own bounds so the shape fills
+         the box and stays legible once blurred. -->
+    <svg viewBox="5 9.4 22 17.6" preserveAspectRatio="xMidYMid meet">
+      <defs>
+        <clipPath id="hs-heart">
+          <path d="M16 25.5S6.5 19.8 6.5 13.6A5.1 5.1 0 0 1 16 10.9a5.1 5.1 0 0 1 9.5 2.7c0 6.2-9.5 11.9-9.5 11.9Z" />
+        </clipPath>
+      </defs>
+      <g clip-path="url(#hs-heart)">
+        <rect x="-32" y="0" width="96" height="32" fill="#7e1024" />
+        <path class="hw hw1" d="M-32 12.5 q 4 -2.4 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 V32 H-32 Z" />
+        <path class="hw hw2" d="M-32 16.5 q 4 -3 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 V32 H-32 Z" />
+        <path class="hw hw3" d="M-32 20.5 q 4 -2.2 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 t 8 0 V32 H-32 Z" />
+      </g>
+    </svg>
+  </div>
   <div class="shell tight final-in">
     <p class="eyebrow on-dark center rv">One decision</p>
-    <h2 class="h-sec rv d1" style="margin-top:1.5rem">
+    <h2 class="h-sec rv d1" data-rainbow="always" style="margin-top:1.5rem">
       Your Past Is Part of Your Story.<br />
       But It Doesn&rsquo;t Have to Control What Comes&nbsp;Next.
     </h2>
@@ -877,7 +1191,7 @@ section{position:relative}
       <p class="eyebrow">Reserve your spot</p>
       <h2 class="modal-h" id="modal-title">Hold My Seat</h2>
       <!-- EDIT: keep in step with the event details above -->
-      <p class="modal-meta">19 Sep 2026 &nbsp;·&nbsp; 5:00 PM – 6:30 PM &nbsp;·&nbsp; 90 minutes &nbsp;·&nbsp; &#8377;499</p>
+      <p class="modal-meta">19 Sep 2026 &nbsp;·&nbsp; 5:00 PM – 6:30 PM &nbsp;·&nbsp; 90 minutes &nbsp;·&nbsp; &#8377;199</p>
 
       <form id="reg-form" novalidate>
         <label class="fld" for="f-name">
@@ -955,6 +1269,197 @@ section{position:relative}
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
     items.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Rainbow titles: overlay each tagged heading with a copy of its own
+     markup. Cloning rather than reading textContent keeps the <br> line
+     breaks and the hero's nested span, so the copy wraps identically at
+     every width and needs no per-breakpoint handling. The copy is inert
+     and hidden from assistive tech; the real heading below it is what
+     gets read and selected.
+
+     Built regardless of the motion preference and hidden in CSS instead,
+     so a viewer toggling the OS setting gets the right result without a
+     reload. */
+  document.querySelectorAll('[data-rainbow]').forEach(function (el) {
+    var layer = document.createElement('span');
+    layer.className = 'rainbow-layer';
+    layer.setAttribute('aria-hidden', 'true');
+    layer.innerHTML = el.innerHTML;
+    el.appendChild(layer);
+  });
+
+  /* Each title lights as it arrives, one pass, then clears — so the
+     spacing between them is just how far apart they sit on the page.
+     The observer only fires on a transition, so a title parked in view
+     will not loop; it replays when scrolled away from and back to. */
+  var timed = document.querySelectorAll('[data-rainbow]:not([data-rainbow="always"])');
+  timed.forEach(function (el) {
+    el.addEventListener('animationend', function (e) {
+      if (e.animationName === 'rb-fade') el.classList.remove('rb-play');
+    });
+  });
+  if ('IntersectionObserver' in window) {
+    var rbIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) e.target.classList.add('rb-play');
+      });
+    }, { rootMargin: '0px 0px -15% 0px', threshold: 0.4 });
+    timed.forEach(function (el) { rbIO.observe(el); });
+  } else {
+    timed.forEach(function (el) { el.classList.add('rb-play'); });
+  }
+
+  /* Registration fee counts up once, when the card is reached. */
+  var priceEl = document.getElementById('price-num');
+  if (priceEl) {
+    var target = parseInt(priceEl.dataset.to, 10) || 0;
+    /* Counts up whatever the motion preference: the figure changes in
+       place, nothing travels across the screen. */
+    var runCount = function () {
+      var dur = 1500, t0 = null;
+      var tick = function (now) {
+        if (t0 === null) t0 = now;
+        var k = Math.min((now - t0) / dur, 1);
+        /* Ease out, so it decelerates into the final figure. */
+        var eased = 1 - Math.pow(1 - k, 3);
+        priceEl.textContent = Math.round(target * eased);
+        if (k < 1) requestAnimationFrame(tick);
+        else priceEl.textContent = target;
+      };
+      requestAnimationFrame(tick);
+    };
+    if ('IntersectionObserver' in window) {
+      var pIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          pIO.unobserve(e.target);
+          priceEl.textContent = '0';
+          runCount();
+        });
+      }, { threshold: 0.6 });
+      pIO.observe(priceEl);
+    }
+  }
+
+  /* ── Pointer effects ───────────────────────────────────────────
+     Both are desktop-only: a coarse pointer has no hover to leave, so
+     the effect would stick on after a tap. */
+  var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ── Film ──────────────────────────────────────────────────────
+     Click the frame to play or pause; mute is the only visible
+     control. Class state drives the glyph and the speaker icon so the
+     DOM stays in step with the element even if playback changes on
+     its own (tab switch, media keys). */
+  var filmVideo = document.getElementById('film-video');
+  var filmFrame = filmVideo && filmVideo.closest('.film-frame');
+  if (filmVideo && filmFrame) {
+    var filmToggle = document.getElementById('film-toggle');
+    var filmMute = document.getElementById('film-mute');
+
+    var syncMute = function () {
+      filmFrame.classList.toggle('muted', filmVideo.muted);
+      filmMute.setAttribute('aria-label', filmVideo.muted ? 'Unmute' : 'Mute');
+    };
+
+    filmToggle.addEventListener('click', function () {
+      if (filmVideo.paused) {
+        var play = filmVideo.play();
+        if (play && play.catch) play.catch(function () {});
+      } else {
+        filmVideo.pause();
+      }
+    });
+
+    filmVideo.addEventListener('play', function () {
+      filmFrame.classList.add('playing');
+      filmToggle.setAttribute('aria-label', 'Pause the film');
+    });
+    filmVideo.addEventListener('pause', function () {
+      filmFrame.classList.remove('playing');
+      filmToggle.setAttribute('aria-label', 'Play the film');
+    });
+    filmVideo.addEventListener('volumechange', syncMute);
+
+    filmMute.addEventListener('click', function (e) {
+      /* Sits on top of the play target, so stop the click there. */
+      e.stopPropagation();
+      filmVideo.muted = !filmVideo.muted;
+    });
+
+    syncMute();
+  }
+
+  /* Red spreads into the fee card from whichever edge the cursor is
+     nearest, and drains away when it leaves. */
+  var reg = document.querySelector('.reg');
+  if (reg && finePointer) {
+    var regRaf = null;
+    reg.addEventListener('mousemove', function (e) {
+      if (regRaf) return;
+      regRaf = requestAnimationFrame(function () {
+        regRaf = null;
+        var r = reg.getBoundingClientRect();
+        var dx = (e.clientX - (r.left + r.width / 2)) / (r.width / 2);
+        var dy = (e.clientY - (r.top + r.height / 2)) / (r.height / 2);
+        /* CSS gradient angles run clockwise from "to top", so this puts
+           the red on the side the cursor is on and fades it inward. */
+        var ang = Math.atan2(-dx, dy) * 180 / Math.PI;
+        var amt = Math.min(1, Math.sqrt(dx * dx + dy * dy)) * 0.9;
+        reg.style.setProperty('--ang', ang.toFixed(1) + 'deg');
+        reg.style.setProperty('--amt', amt.toFixed(3));
+        reg.classList.add('lit');
+      });
+    }, { passive: true });
+
+    reg.addEventListener('mouseleave', function () {
+      reg.classList.remove('lit');
+      reg.style.setProperty('--amt', '0');
+    });
+  }
+
+  /* ── Hero circle ───────────────────────────────────────────────
+     Point HERO_CIRCLE_VIDEO at a file (e.g. 'assets/hero-circle.mp4')
+     and it plays inside the circle, clipped to it, replacing the line
+     drawing. Left empty, the drawing plays and no request is made — so
+     no 404 sits in the console waiting for the film to be shot. */
+  var HERO_CIRCLE_VIDEO = '';
+
+  var orb = document.querySelector('.orb');
+
+  /* Measure each stroke so every line draws at the same rate whatever
+     its length, and stagger them so the mind is drawn, then the heart. */
+  if (orb) {
+    var strokes = orb.querySelectorAll('.dr');
+    strokes.forEach(function (path, i) {
+      var len = 300;
+      try { len = Math.ceil(path.getTotalLength()) || 300; } catch (err) { /* keep default */ }
+      path.style.setProperty('--len', len);
+      path.style.animationDelay = (0.1 + i * 0.08).toFixed(2) + 's';
+    });
+  }
+
+  /* Draw the heart and mind when the hero is on screen, and rearm it
+     once it has left, so returning to the top plays it again. */
+  if (orb && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        orb.classList.toggle('draw-in', e.isIntersecting);
+      });
+    }, { threshold: 0.25 }).observe(orb);
+  } else if (orb) {
+    orb.classList.add('draw-in');
+  }
+
+  var orbVideo = orb && orb.querySelector('.orb-video');
+  if (orbVideo && HERO_CIRCLE_VIDEO) {
+    orbVideo.addEventListener('loadeddata', function () {
+      orb.classList.add('has-video');
+      var play = orbVideo.play();
+      if (play && play.catch) play.catch(function () {});
+    });
+    orbVideo.src = HERO_CIRCLE_VIDEO;
   }
 
   /* Nav hairline appears once the hero starts to leave. */
