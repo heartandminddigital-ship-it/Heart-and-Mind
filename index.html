@@ -55,13 +55,17 @@
   --ease:cubic-bezier(.16,1,.3,1);
   --shell:1120px;
   --pad:clamp(1.25rem,5vw,2.5rem);
-  --band:clamp(4.5rem,10vw,8rem);
+  /* Tightened from 4.5–8rem: the page was spending too much of the
+     scroll on empty ground between sections. */
+  --band:clamp(2.75rem,6vw,4.75rem);
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:5rem;-webkit-text-size-adjust:100%}
+/* clip rather than hidden: both stop sideways scroll, but `hidden` turns
+   the element into a scroll container and can break the sticky nav. */
+html{scroll-behavior:smooth;scroll-padding-top:5rem;-webkit-text-size-adjust:100%;overflow-x:clip}
 body{
-  margin:0;overflow-x:clip;
+  margin:0;overflow-x:clip;max-width:100%;
   background:var(--linen);
   color:var(--stone);
   font-family:var(--font-body);
@@ -96,7 +100,7 @@ section{position:relative}
 .hair-top{border-top:1px solid var(--rule)}
 
 /* Ornament between movements — the connective tissue of the page. */
-.orn{display:flex;align-items:center;justify-content:center;gap:.55rem;padding-block:clamp(1.75rem,4vw,2.75rem)}
+.orn{display:flex;align-items:center;justify-content:center;gap:.55rem;padding-block:clamp(.9rem,2.2vw,1.5rem)}
 .orn i{width:4px;height:4px;border-radius:50%;background:var(--rose)}
 .orn i:nth-child(2){width:5px;height:5px;background:var(--crimson);opacity:.45}
 .orn.on-dark i{background:var(--rose);opacity:.45}
@@ -135,7 +139,7 @@ section{position:relative}
 @keyframes sweep{to{background-size:100% .19em}}
 
 /* Three-line brand promise */
-.promise{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.1rem;margin-top:2rem}
+.promise{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.1rem;margin-top:1.4rem}
 .promise span{
   font-family:var(--font-display);font-weight:700;color:var(--maroon);
   font-size:clamp(1rem,1.4vw,1.2rem);letter-spacing:-.015em;
@@ -214,13 +218,13 @@ section{position:relative}
 /* ── Hero ───────────────────────────────────────────────────── */
 .hero{
   position:relative;overflow:hidden;
-  padding-block:clamp(3.5rem,8vw,5.75rem) clamp(4rem,9vw,7rem);
+  padding-block:clamp(2rem,4.5vw,3.25rem) clamp(2.25rem,5vw,3.5rem);
   background:linear-gradient(168deg,var(--paper) 0%,var(--linen) 46%,var(--rose-pale) 100%);
 }
 .hero-in{position:relative;z-index:2;max-width:1080px}
 .hero .eyebrow{margin-bottom:clamp(1.4rem,3vw,2rem)}
-.hero .lede{margin-top:1.9rem}
-.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:2.4rem}
+.hero .lede{margin-top:1.35rem}
+.hero-cta{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:1.7rem}
 /* Two aligned rows sharing one rule: the live/format line, and the
    dated facts beneath it. Same separators and baseline either side. */
 .hero-meta{margin-top:1.6rem;display:flex;flex-direction:column;gap:.6rem;align-items:flex-start}
@@ -248,14 +252,40 @@ section{position:relative}
   background:radial-gradient(circle,rgba(176,4,26,.12) 0%,rgba(176,4,26,0) 70%);animation-delay:-3.5s}
 @keyframes breathe{from{transform:scale(1) translateY(0)}to{transform:scale(1.12) translateY(-14px)}}
 
-/* Circular film well, centred on the ripple rings. Anything inside is
-   clipped to the circle, so a 9:16 or 16:9 source both fill it cleanly. */
-/* Low and right, inside the outer ripple but clear of the headline,
-   which runs almost the full width of the shell on wide screens. */
+/* "But the Emotion" and "Is Still There." stack in their own tight
+   two-line column so they stay close together, with the circle sitting
+   beside that column — a real flex row, not a block interposed between
+   the two lines — using the free width the short lines leave on the
+   right. Line-height alone controls the gap above, so it reads as
+   continuous with "Sometimes, the Situation Is Over." above it. */
+.h-hero .hl{display:block}
+.hero-row{
+  display:flex;align-items:center;
+  gap:clamp(.6rem,3vw,2.5rem);
+}
+/* Desktop only: centering the row on the (taller) circle held the text
+   column away from the row's own top edge, opening a visual gap under
+   "Sometimes, the Situation Is Over." that the boxes themselves don't
+   have. Flush-starting the row lets "But the Emotion" begin right where
+   line one ends, with the circle — taller than the two lines — simply
+   extending further down past "Is Still There." instead of overflowing
+   equally on both sides. Mobile keeps the centered row as-is. */
+@media (min-width:901px){
+  .hero-row{align-items:flex-start}
+}
+.hero-lines{display:block;min-width:0}
 .hero-orb{
-  position:absolute;right:1vw;bottom:2vw;
-  width:min(34vw,360px);height:min(34vw,360px);
-  display:grid;place-items:center;pointer-events:none;
+  position:relative;display:block;flex:none;
+  width:min(26vw,258px);aspect-ratio:1;
+  margin-left:auto;
+  pointer-events:none;
+}
+/* A thin, always-visible red orbit around the illustration — distinct
+   from the faint animated ripples, which fade in and out and are not
+   reliable as the "clearly visible" ring on their own. */
+.hero-orb::after{
+  content:"";position:absolute;inset:-6%;border-radius:50%;
+  border:1.5px solid var(--crimson);opacity:.75;pointer-events:none;
 }
 .orb{
   /* Dark ground: the mind is drawn in white line, which needs one. */
@@ -282,16 +312,72 @@ section{position:relative}
 .dr{stroke-dasharray:var(--len,300);stroke-dashoffset:var(--len,300)}
 .orb.draw-in .dr{animation:dr-draw 1.4s var(--ease) both}
 @keyframes dr-draw{to{stroke-dashoffset:0}}
-@media (max-width:900px){.hero-orb{display:none}}
+/* Stays beside "But the Emotion / Is Still There." at every width,
+   never dropping below it — the row itself never breaks. The headline
+   size steps down on narrower phones (below) so the two short lines
+   leave real room in that row for the circle to shrink into, rather
+   than the circle overlapping the text or the row overflowing. Never
+   hidden. */
+@media (max-width:900px){
+  .hero-orb{width:min(23vw,156px)}
+}
+@media (max-width:640px){
+  .hero-row{gap:clamp(.5rem,3vw,1rem)}
+  .hero-orb{width:min(27vw,128px)}
+}
+@media (max-width:420px){
+  .hero-orb{width:104px}
+}
+@media (max-width:340px){
+  /* The narrowest phones have no width left to spare: back the circle
+     off just enough that "But the Emotion" still holds one line rather
+     than wrapping around it. */
+  .hero-row{gap:.45rem}
+  .hero-orb{width:88px}
+}
 
-.ripples{position:absolute;right:-5vw;top:1vw;width:min(56vw,700px);height:min(56vw,700px);opacity:.6}
+/* ── Session fact cards ─────────────────────────────────────── */
+.hero-facts{margin-top:clamp(1.5rem,3.5vw,2.25rem)}
+.facts-grid{
+  display:grid;gap:.7rem;
+  /* auto-fit lays them out in one clean row on a wide screen and folds
+     to two columns on a phone without a media query. */
+  grid-template-columns:repeat(auto-fit,minmax(148px,1fr));
+  list-style:none;margin:0;padding:0;
+}
+.fcard{
+  display:flex;flex-direction:column;gap:.3rem;
+  padding:.85rem .95rem;border-radius:14px;
+  background:linear-gradient(158deg,#630b1a 0%,var(--maroon) 78%);
+  border:1px solid rgba(255,201,95,.22);
+  box-shadow:0 1px 2px rgba(80,7,17,.16),0 14px 30px -22px rgba(80,7,17,.7);
+}
+.fc-ic{font-size:1.02rem;line-height:1}
+.fc-k{
+  font-size:.6rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--gold);
+}
+.fc-v{
+  font-family:var(--font-display);font-weight:700;font-size:.92rem;
+  color:#fff;line-height:1.28;letter-spacing:-.01em;
+}
+@media (max-width:520px){
+  .facts-grid{gap:.6rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fcard{padding:.7rem .8rem}
+  .fc-v{font-size:.86rem}
+}
+
+/* Concentric with the circle it now lives inside, so the outlined ring
+   follows it wherever the headline places it. */
+.ripples{position:absolute;left:50%;top:50%;translate:-50% -50%;
+  width:250%;height:250%;opacity:.6;pointer-events:none}
 .ripples circle{fill:none;stroke:var(--rose);stroke-width:1;transform-origin:center;animation:widen 9s var(--ease) infinite}
 .ripples circle:nth-child(2){animation-delay:1.8s}
 .ripples circle:nth-child(3){animation-delay:3.6s}
 .ripples circle:nth-child(4){animation-delay:5.4s}
 .ripples circle:nth-child(5){stroke:var(--crimson);opacity:.3;animation-delay:7.2s}
 @keyframes widen{0%{transform:scale(.26);opacity:0}18%{opacity:.9}100%{transform:scale(1);opacity:0}}
-@media (max-width:820px){.ripples{right:-26vw;top:auto;bottom:-16vw;opacity:.4}}
+@media (max-width:820px){.ripples{width:215%;height:215%;opacity:.45}}
 
 /* ── Reveal on scroll ───────────────────────────────────────── */
 .rv{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
@@ -398,7 +484,7 @@ section{position:relative}
 .reg .btn{margin-top:1.9rem;width:100%;max-width:420px}
 /* Inline rather than flex, so the padlock never orphans onto its own
    line when the reassurance text wraps on a phone. */
-.secure{margin-top:1.05rem;font-size:.86rem;color:var(--stone-soft);text-align:center}
+.secure{margin-top:.75rem;font-size:.86rem;color:var(--stone-soft);text-align:center}
 .secure svg{width:14px;height:14px;vertical-align:-2px;margin-right:.45rem;
   stroke:var(--stone-soft);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 
@@ -435,7 +521,7 @@ section{position:relative}
 /* ── Section 8 · Final ──────────────────────────────────────── */
 .final{
   position:relative;overflow:hidden;text-align:center;
-  padding-block:clamp(5rem,11vw,8.5rem);
+  padding-block:clamp(3rem,6.5vw,5rem);
   /* A red ground rather than the flat maroon used elsewhere. */
   background:radial-gradient(120% 95% at 50% 12%,#7d0d1e 0%,#5a0916 46%,#3c0510 100%);
   box-shadow:inset 0 0 clamp(80px,14vw,190px) rgba(176,4,26,.5);
@@ -466,7 +552,7 @@ section{position:relative}
 
 /* ── Footer ─────────────────────────────────────────────────── */
 .foot{background:var(--maroon);border-top:1px solid rgba(237,155,189,.16);
-  padding-block:clamp(2.5rem,5vw,3.5rem);color:rgba(237,155,189,.6);font-size:.88rem}
+  padding-block:clamp(1.6rem,3.2vw,2.4rem);color:rgba(237,155,189,.6);font-size:.88rem}
 .foot-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1.5rem}
 /* The mark's own ground is the same maroon as the footer, so it needs a
    hairline to read as a badge rather than as floating letters. */
@@ -484,7 +570,7 @@ section{position:relative}
 .modal-card{
   position:relative;width:100%;max-width:460px;max-height:92vh;overflow-y:auto;
   background:var(--paper);border:1px solid var(--rose-hair);border-radius:20px;
-  padding:clamp(1.6rem,4vw,2.25rem);
+  padding:clamp(1.15rem,3vw,1.6rem);
   box-shadow:0 30px 80px -30px rgba(45,4,10,.6);
   opacity:0;transform:translateY(14px) scale(.985);
   transition:opacity .35s var(--ease),transform .35s var(--ease);
@@ -499,17 +585,17 @@ section{position:relative}
   font-size:1.4rem;line-height:1;cursor:pointer;transition:background-color .2s var(--ease),color .2s var(--ease);
 }
 .modal-x:hover{background:var(--rose-pale);color:var(--crimson)}
-.modal-h{font-size:clamp(1.5rem,4vw,1.9rem);letter-spacing:-.03em;margin-top:1rem}
-.modal-meta{font-size:.88rem;color:var(--stone-soft);margin-top:.6rem;
-  padding-bottom:1.35rem;border-bottom:1px solid var(--rule)}
+.modal-h{font-size:clamp(1.25rem,3.2vw,1.55rem);letter-spacing:-.03em;margin-top:.65rem}
+.modal-meta{font-size:.85rem;color:var(--stone-soft);margin-top:.4rem;
+  padding-bottom:.95rem;border-bottom:1px solid var(--rule)}
 
-.fld{display:block;margin-top:1.15rem}
+.fld{display:block;margin-top:.8rem}
 .fld > span{display:block;font-size:.78rem;font-weight:600;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--stone);margin-bottom:.45rem}
+  text-transform:uppercase;color:var(--stone);margin-bottom:.28rem}
 .fld input,.fld select{
   width:100%;font:inherit;font-size:1rem;color:var(--maroon);
   background:#fff;border:1px solid var(--rose-hair);border-radius:10px;
-  padding:.8rem .95rem;min-height:50px;
+  padding:.6rem .9rem;min-height:46px;
   transition:border-color .2s var(--ease),box-shadow .2s var(--ease);
 }
 .fld input::placeholder{color:#b9aca6}
@@ -528,39 +614,39 @@ section{position:relative}
 .fld .err{display:none;font-style:normal;font-size:.8rem;color:var(--crimson);margin-top:.4rem}
 .fld.invalid input,.fld.invalid select{border-color:var(--crimson)}
 .fld.invalid .err{display:block}
-#reg-form .btn{width:100%;margin-top:1.6rem}
+#reg-form .btn{width:100%;margin-top:1.05rem}
 #reg-form .btn[disabled]{opacity:.65;cursor:progress}
 .form-err{display:none;margin-top:.9rem;font-size:.87rem;color:var(--crimson);text-align:center}
 .form-err.show{display:block}
 
 /* Confirmation state */
 .done{text-align:center;padding-block:.75rem}
-.done-mark{width:64px;height:64px;margin:0 auto 1.3rem;display:grid;place-items:center;
+.done-mark{width:52px;height:52px;margin:0 auto .9rem;display:grid;place-items:center;
   border-radius:50%;background:var(--rose-pale);border:1px solid var(--rose-hair)}
 .done-mark svg{width:28px;height:28px;stroke:var(--crimson);fill:none;stroke-width:2.4;
   stroke-linecap:round;stroke-linejoin:round}
 .done .modal-h{margin-top:0}
 .done p{margin-top:.9rem;font-size:.98rem}
-.done .btn{margin-top:1.7rem;width:100%}
+.done .btn{margin-top:1.1rem;width:100%}
 
 /* ── Film ───────────────────────────────────────────────────── */
-/* The band bridges the two grounds either side of it: it opens on the
-   rose the hero fades to and closes on the paper section 2 opens with,
-   so the film reads as part of the flow rather than an inserted block. */
-.film{background:linear-gradient(180deg,var(--rose-pale) 0%,var(--paper) 100%)}
+.hero-film{text-align:center;margin-top:clamp(1.75rem,4vw,2.5rem)}
+.hero-film .eyebrow{margin-bottom:clamp(.85rem,2vw,1.25rem)}
 
-/* The film is a 9:16 vertical cut, so it gets a phone-shaped frame
-   rather than a full-width band. aspect-ratio holds the space before
-   metadata arrives, so nothing jumps as it loads. */
+/* Back to the film's own 9:16, uncropped, at the width it had before —
+   aspect-ratio holds the space so nothing jumps as metadata loads. */
 .film-frame{
+  position:relative;
   width:min(360px,74vw);
-  margin:clamp(2rem,4vw,2.75rem) auto 0;
+  margin:0 auto;
   border-radius:22px;overflow:hidden;
   background:var(--maroon);
   box-shadow:0 2px 6px rgba(80,7,17,.09),0 30px 70px -30px rgba(80,7,17,.5);
 }
-.film-frame{position:relative}
-.film-frame video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:var(--maroon)}
+.film-frame video{
+  display:block;width:100%;height:auto;aspect-ratio:9/16;
+  background:var(--maroon);
+}
 
 /* Click target covering the whole frame: play/pause lives here. */
 .film-hit{
@@ -692,6 +778,14 @@ section{position:relative}
 
 /* ── Narrow screens ─────────────────────────────────────────── */
 @media (max-width:640px){
+  /* Below ~620px the preferred 6.2vw already reads smaller than the
+     2.4rem floor, so the headline was flatlining at that floor on
+     every phone instead of continuing to scale down — leaving no
+     room in the "But the Emotion" row for the circle beside it. A
+     lower, steeper floor here lets it keep shrinking with the
+     viewport instead of going flat. */
+  .h-hero{font-size:clamp(1.7rem,8.6vw,4.4rem)}
+
   /* The promise reads as three lines, never as a wrapped row with an
      orphaned dot leading the second line. */
   .promise{flex-direction:column;align-items:flex-start;gap:.4rem}
@@ -751,7 +845,6 @@ section{position:relative}
   <div class="shell nav-in">
     <a class="brand" href="#top">
       <img src="assets/logo-heart-mind.png" alt="Heart &amp; Mind" />
-      <span class="brand-tag">Live Session</span>
     </a>
     <a class="btn" href="#register">Reserve Your Spot <span class="arw">&rarr;</span></a>
   </div>
@@ -763,71 +856,73 @@ section{position:relative}
     <span class="aura a1"></span>
     <span class="aura a2"></span>
     <span class="aura a3"></span>
-    <!-- Sits on the centre of the ripple rings. The line drawing plays
-         until a film is dropped in at assets/hero-circle.mp4, at which
-         point the video fades in over it. -->
-    <div class="hero-orb">
-      <div class="orb">
-        <svg class="orb-draw" viewBox="0 0 200 124">
-          <!-- Mind, left, white line -->
-          <g class="ink-mind" fill="none" stroke="#fff" stroke-width="1.5"
-             stroke-linecap="round" stroke-linejoin="round">
-            <path class="dr" d="M54 18C37 17 23 25 18 38c-8 6-10 15-4 22-6 8-4 18 4 23 1 9 8 15 17 16 4 7 13 10 21 7 8 5 19 3 25-4 9-1 15-9 14-18 6-7 6-17-1-23 1-11-6-20-17-22C72 22 64 18 54 18Z" />
-            <path class="dr" d="M25 42c9-5 18-2 22 6 3 7 11 10 18 6" />
-            <path class="dr" d="M17 60c9-4 17 0 20 9 2 8 10 12 18 9" />
-            <path class="dr" d="M22 79c8-4 16-1 20 7" />
-            <path class="dr" d="M38 26c8-1 14 4 15 12 1 7 7 11 14 10" />
-            <path class="dr" d="M62 22c6 6 6 14 0 19-5 5-4 12 2 16" />
-            <path class="dr" d="M76 32c-7 3-10 10-6 17 3 6 11 8 17 4" />
-            <path class="dr" d="M60 60c8-2 15 3 16 11 1 7 7 11 14 10" />
-            <path class="dr" d="M44 92c5-6 13-7 19-2" />
-            <path class="dr" d="M66 84c7-3 14 0 17 7" />
-            <!-- cerebellum and stem -->
-            <path class="dr" d="M74 96c9 1 16-4 17-13" />
-            <path class="dr" d="M77 101c6 0 11-3 13-8M79 106c5-1 9-4 11-8" />
-            <path class="dr" d="M62 99c2 8 0 14-6 17" />
-          </g>
-          <!-- Heart, right, red line -->
-          <g class="ink-heart" fill="none" stroke="#e0344f" stroke-width="1.5"
-             stroke-linecap="round" stroke-linejoin="round">
-            <path class="dr" d="M145 115c-17-11-27-29-27-49 0-12 7-20 17-21 5-6 14-8 21-4 7-6 18-4 23 4 10 5 14 18 9 29-4 18-18 33-36 42-2 1-5 1-7-1Z" />
-            <!-- aortic arch, drawn as a tube: two parallel walls -->
-            <path class="dr" d="M158 41c-1-13 3-23 12-27 9-4 17 2 16 12-1 8-5 14-6 20" />
-            <path class="dr" d="M165 43c-1-11 2-18 8-21 6-3 10 1 9 8-1 6-4 11-4 16" />
-            <!-- pulmonary artery, crossing in front to the left -->
-            <path class="dr" d="M137 47c-4-11-10-19-19-23" />
-            <path class="dr" d="M144 44c-3-10-9-17-17-21" />
-            <!-- superior vena cava -->
-            <path class="dr" d="M181 52c5-8 6-18 3-26" />
-            <!-- anterior interventricular groove -->
-            <path class="dr" d="M139 57c10 8 15 21 13 35-1 8-4 15-9 21" />
-            <!-- atrioventricular groove -->
-            <path class="dr" d="M128 63c11 6 23 4 32-4" />
-            <!-- coronary branches -->
-            <path class="dr" d="M164 68c6 7 8 17 4 26-2 6-6 11-11 14" />
-            <path class="dr" d="M129 78c7 4 11 11 11 20" />
-            <path class="dr" d="M172 57c4 6 5 13 3 20" />
-          </g>
-        </svg>
-        <video class="orb-video" muted loop playsinline preload="metadata" aria-hidden="true"></video>
-      </div>
-    </div>
-
-    <svg class="ripples" viewBox="0 0 400 400">
-      <circle cx="200" cy="200" r="196" />
-      <circle cx="200" cy="200" r="196" />
-      <circle cx="200" cy="200" r="196" />
-      <circle cx="200" cy="200" r="196" />
-      <circle cx="200" cy="200" r="196" />
-    </svg>
-  </div>
+  
+</div>
 
   <div class="shell hero-in">
     <p class="eyebrow rv">A 90-Minute Live Online Session</p>
 
     <h1 class="h-hero rv d1" data-rainbow="a">
-      Sometimes, the Situation Is&nbsp;Over.<br />
-      <span class="accent">But the Emotion Is Still&nbsp;There.</span>
+      <span class="hl">Sometimes, the Situation Is&nbsp;Over.</span>
+      <span class="hero-row">
+        <span class="hero-lines">
+          <span class="hl"><span class="accent">But the Emotion</span></span>
+          <span class="hl"><span class="accent">Is Still&nbsp;There.</span></span>
+        </span>
+        <span class="hero-orb">
+        <svg class="ripples" viewBox="0 0 400 400">
+        <circle cx="200" cy="200" r="196" />
+        <circle cx="200" cy="200" r="196" />
+        <circle cx="200" cy="200" r="196" />
+        <circle cx="200" cy="200" r="196" />
+        <circle cx="200" cy="200" r="196" />
+        </svg>
+        <span class="orb">
+        <svg class="orb-draw" viewBox="0 0 200 124">
+        <!-- Mind, left, white line -->
+        <g class="ink-mind" fill="none" stroke="#fff" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path class="dr" d="M54 18C37 17 23 25 18 38c-8 6-10 15-4 22-6 8-4 18 4 23 1 9 8 15 17 16 4 7 13 10 21 7 8 5 19 3 25-4 9-1 15-9 14-18 6-7 6-17-1-23 1-11-6-20-17-22C72 22 64 18 54 18Z" />
+        <path class="dr" d="M25 42c9-5 18-2 22 6 3 7 11 10 18 6" />
+        <path class="dr" d="M17 60c9-4 17 0 20 9 2 8 10 12 18 9" />
+        <path class="dr" d="M22 79c8-4 16-1 20 7" />
+        <path class="dr" d="M38 26c8-1 14 4 15 12 1 7 7 11 14 10" />
+        <path class="dr" d="M62 22c6 6 6 14 0 19-5 5-4 12 2 16" />
+        <path class="dr" d="M76 32c-7 3-10 10-6 17 3 6 11 8 17 4" />
+        <path class="dr" d="M60 60c8-2 15 3 16 11 1 7 7 11 14 10" />
+        <path class="dr" d="M44 92c5-6 13-7 19-2" />
+        <path class="dr" d="M66 84c7-3 14 0 17 7" />
+        <!-- cerebellum and stem -->
+        <path class="dr" d="M74 96c9 1 16-4 17-13" />
+        <path class="dr" d="M77 101c6 0 11-3 13-8M79 106c5-1 9-4 11-8" />
+        <path class="dr" d="M62 99c2 8 0 14-6 17" />
+        </g>
+        <!-- Heart, right, red line -->
+        <g class="ink-heart" fill="none" stroke="#e0344f" stroke-width="1.5"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path class="dr" d="M145 115c-17-11-27-29-27-49 0-12 7-20 17-21 5-6 14-8 21-4 7-6 18-4 23 4 10 5 14 18 9 29-4 18-18 33-36 42-2 1-5 1-7-1Z" />
+        <!-- aortic arch, drawn as a tube: two parallel walls -->
+        <path class="dr" d="M158 41c-1-13 3-23 12-27 9-4 17 2 16 12-1 8-5 14-6 20" />
+        <path class="dr" d="M165 43c-1-11 2-18 8-21 6-3 10 1 9 8-1 6-4 11-4 16" />
+        <!-- pulmonary artery, crossing in front to the left -->
+        <path class="dr" d="M137 47c-4-11-10-19-19-23" />
+        <path class="dr" d="M144 44c-3-10-9-17-17-21" />
+        <!-- superior vena cava -->
+        <path class="dr" d="M181 52c5-8 6-18 3-26" />
+        <!-- anterior interventricular groove -->
+        <path class="dr" d="M139 57c10 8 15 21 13 35-1 8-4 15-9 21" />
+        <!-- atrioventricular groove -->
+        <path class="dr" d="M128 63c11 6 23 4 32-4" />
+        <!-- coronary branches -->
+        <path class="dr" d="M164 68c6 7 8 17 4 26-2 6-6 11-11 14" />
+        <path class="dr" d="M129 78c7 4 11 11 11 20" />
+        <path class="dr" d="M172 57c4 6 5 13 3 20" />
+        </g>
+        </svg>
+        <video class="orb-video" muted loop playsinline preload="metadata" aria-hidden="true"></video>
+        </span>
+        </span>
+      </span>
     </h1>
 
     <div class="promise rv d2">
@@ -848,35 +943,12 @@ section{position:relative}
       <a class="btn btn-quiet" href="#session">See What We Will Explore</a>
     </div>
 
-    <div class="hero-meta rv d5">
-      <p class="meta-row">
-        <span class="live-dot" aria-hidden="true"></span>
-        <span>Live Online Session</span>
-        <span class="sep" aria-hidden="true"></span>
-        <span>90 Minutes</span>
-        <span class="sep" aria-hidden="true"></span>
-        <span class="muted">Limited seats</span>
-      </p>
-      <!-- EDIT: session date and time -->
-      <p class="meta-row meta-facts">
-        <span><i class="emo" aria-hidden="true">📅</i><b>Date:</b> 19 Sep 2026</span>
-        <span class="sep" aria-hidden="true"></span>
-        <span><i class="emo" aria-hidden="true">🕔</i><b>Time:</b> 5:00 PM – 6:30 PM</span>
-        <span class="sep" aria-hidden="true"></span>
-        <span><i class="emo" aria-hidden="true">⏱️</i><b>Duration:</b> 90 Minutes</span>
-      </p>
-    </div>
   </div>
-</section>
 
-<!-- ══ 1b · Film ════════════════════════════════════════════ -->
-<section class="band film" id="film">
-  <div class="shell center">
+  <!-- The film sits directly under the copy, before the session facts. -->
+  <div class="shell hero-film" id="film">
     <p class="eyebrow center rv">A Short Film</p>
-    <!-- No native controls: they bring a progress bar, fullscreen,
-         download and picture-in-picture with them. Play/pause is the
-         video itself, and mute is the only control shown. -->
-    <div class="film-frame rv d1">
+<div class="film-frame rv d1">
       <video id="film-video" playsinline preload="metadata">
         <source src="assets/session-film.mp4" type="video/mp4" />
         Your browser does not support embedded video.
@@ -900,6 +972,42 @@ section{position:relative}
         </svg>
       </button>
     </div>
+  </div>
+
+  <!-- EDIT: session date and time -->
+  <div class="shell hero-facts">
+    <ul class="facts-grid rv">
+        <li class="fcard">
+          <span class="fc-ic" aria-hidden="true">📡</span>
+          <span class="fc-k">Live Online</span>
+          <span class="fc-v">Live Online Session</span>
+        </li>
+        <li class="fcard">
+          <span class="fc-ic" aria-hidden="true">⏱️</span>
+          <span class="fc-k">90 Minutes</span>
+          <span class="fc-v">Duration: 90 Minutes</span>
+        </li>
+        <li class="fcard">
+          <span class="fc-ic" aria-hidden="true">👥</span>
+          <span class="fc-k">Limited Seats</span>
+          <span class="fc-v">Only 90 people</span>
+        </li>
+        <li class="fcard">
+          <span class="fc-ic" aria-hidden="true">📅</span>
+          <span class="fc-k">Date</span>
+          <span class="fc-v">19 Sep 2026</span>
+        </li>
+        <li class="fcard">
+          <span class="fc-ic" aria-hidden="true">🕔</span>
+          <span class="fc-k">Time</span>
+          <span class="fc-v">5:00 PM – 6:30 PM</span>
+        </li>
+        <li class="fcard">
+          <span class="fc-ic" aria-hidden="true">⏱️</span>
+          <span class="fc-k">Duration</span>
+          <span class="fc-v">90 Minutes</span>
+        </li>
+    </ul>
   </div>
 </section>
 
@@ -1207,9 +1315,9 @@ section{position:relative}
         </label>
 
         <label class="fld" for="f-sex">
-          <span>Sex</span>
+          <span>Gender</span>
           <select id="f-sex" name="sex" required>
-            <option value="" selected disabled>Select an option</option>
+            <option value="General" selected>General</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
             <option value="Prefer not to say">Prefer not to say</option>
@@ -1223,7 +1331,7 @@ section{position:relative}
           <em class="err">Please enter a valid phone number.</em>
         </label>
 
-        <button class="btn" type="submit" id="reg-submit">Submit Reservation <span class="arw">&rarr;</span></button>
+        <button class="btn" type="submit" id="reg-submit">Submit and Pay <span class="arw">&rarr;</span></button>
         <p class="form-err" id="form-err">Something went wrong. Please try again.</p>
 
         <p class="secure">
@@ -1239,9 +1347,9 @@ section{position:relative}
       </div>
       <h2 class="modal-h" tabindex="-1" id="done-title">Your spot has been reserved successfully!</h2>
       <p class="muted">
-        We&rsquo;ve saved your seat for the live 90-minute session on
-        19 Sep 2026. Your joining link and payment details will reach you
-        by email shortly.
+        Payment received — your seat is confirmed for the live 90-minute
+        session on 19 Sep 2026. Your joining link will reach you by
+        email shortly.
       </p>
       <button class="btn" type="button" data-close>Done</button>
     </div>
@@ -1253,6 +1361,11 @@ section{position:relative}
   <a class="btn" href="#register">Reserve Your Spot <span class="arw">&rarr;</span></a>
   <span class="sub">Live Online Session &nbsp;•&nbsp; 90 Minutes</span>
 </div>
+
+<!-- Loaded synchronously so window.Razorpay exists by the time the form
+     below is submitted — it only runs after a click, long after this
+     has finished loading. -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
 (function () {
@@ -1286,6 +1399,13 @@ section{position:relative}
     layer.className = 'rainbow-layer';
     layer.setAttribute('aria-hidden', 'true');
     layer.innerHTML = el.innerHTML;
+    /* The headline now contains the circle. The clone must keep its box
+       so the copied lines stay in register with the real ones, but must
+       not paint a second illustration on top of the first. */
+    layer.querySelectorAll('.hero-orb').forEach(function (ghost) {
+      ghost.innerHTML = '';
+      ghost.style.visibility = 'hidden';
+    });
     el.appendChild(layer);
   });
 
@@ -1502,14 +1622,16 @@ section{position:relative}
   /* ── Reservation form ──────────────────────────────────────────
      One journey for every CTA: Registration -> Payment -> Confirmation.
 
-     RESERVATION_ENDPOINT is where a submitted reservation is POSTed as
-     JSON ({name, email, phone, session}). While it is empty the form
-     validates and confirms in the browser but STORES NOTHING — set it to
-     your form handler or booking API to actually capture reservations.
+     Submitting opens Razorpay Checkout. /api/create-order (server-side,
+     where the key secret lives) creates the order and returns just the
+     order id and the public key id; /api/verify-payment recomputes the
+     signature server-side afterward, because Razorpay's own "success"
+     callback fires client-side and could otherwise be forged from
+     devtools with a fake payment id. See api/create-order.js and
+     api/verify-payment.js.
 
-     REGISTRATION_URL is the alternative: set it to a hosted checkout or
-     booking page and every CTA opens that link instead of this form. */
-  var RESERVATION_ENDPOINT = '';
+     REGISTRATION_URL is a bypass: set it to a hosted checkout or booking
+     page and every CTA opens that link instead of this form/payment. */
   var REGISTRATION_URL = '';
 
   var modal = document.getElementById('modal');
@@ -1612,6 +1734,91 @@ section{position:relative}
     });
   });
 
+  var BTN_LABEL = 'Submit and Pay <span class="arw">→</span>';
+
+  function setBusy(on, label) {
+    submitBtn.disabled = on;
+    submitBtn.innerHTML = on ? label : BTN_LABEL;
+  }
+
+  function showError(msg) {
+    formErr.textContent = msg;
+    formErr.classList.add('show');
+  }
+
+  /* Runs once a payment is confirmed genuine by /api/verify-payment. */
+  function onPaid(order) {
+    if (order.successRedirect) { window.location.href = order.successRedirect; return; }
+    viewForm.hidden = true;
+    viewDone.hidden = false;
+    document.getElementById('done-title').focus({ preventScroll: true });
+    card.scrollTop = 0;
+    form.reset();
+    setBusy(false);
+    form.querySelectorAll('.fld.invalid').forEach(function (f) { f.classList.remove('invalid'); });
+  }
+
+  /* Razorpay reported the payment failed, or our own signature check
+     rejected it — either way, nothing was actually paid. */
+  function onFailed(order, msg) {
+    if (order.failureRedirect) { window.location.href = order.failureRedirect; return; }
+    showError(msg);
+    setBusy(false);
+  }
+
+  function postJSON(url, body) {
+    return fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }).then(function (r) {
+      return r.json()
+        .catch(function () { return {}; })
+        .then(function (data) { return { ok: r.ok, data: data }; });
+    });
+  }
+
+  function openRazorpay(order, payload) {
+    if (typeof Razorpay === 'undefined') {
+      showError('Payment could not load. Please check your connection and try again.');
+      setBusy(false);
+      return;
+    }
+
+    var rzp = new Razorpay({
+      key: order.keyId,
+      order_id: order.orderId,
+      amount: order.amount,
+      currency: order.currency,
+      name: 'Heart & Mind',
+      description: 'Live 90-Minute Session — 19 Sep 2026',
+      prefill: { name: payload.name, contact: payload.phone },
+      theme: { color: '#b0041a' },
+      modal: {
+        /* Closed the popup without paying — let them try again rather
+           than treating it as a failed payment. */
+        ondismiss: function () { setBusy(false); },
+      },
+      handler: function (response) {
+        setBusy(true, 'Confirming payment…');
+        postJSON('/api/verify-payment', response)
+          .then(function (res) {
+            if (res.ok && res.data.verified) onPaid(order);
+            else onFailed(order, 'We could not confirm that payment. Please contact us before trying again.');
+          })
+          .catch(function () {
+            onFailed(order, 'We could not confirm that payment. Please contact us before trying again.');
+          });
+      },
+    });
+
+    rzp.on('payment.failed', function () {
+      onFailed(order, 'The payment did not go through. Please try again.');
+    });
+
+    rzp.open();
+  }
+
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     formErr.classList.remove('show');
@@ -1625,36 +1832,18 @@ section{position:relative}
       age: parseInt(form.elements.age.value, 10),
       sex: form.elements.sex.value,
       phone: form.elements.phone.value.trim(),
-      session: '19 Sep 2026, 5:00 PM - 6:30 PM',
     };
 
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Reserving…';
+    setBusy(true, 'Starting payment…');
 
-    var finish = function () {
-      viewForm.hidden = true;
-      viewDone.hidden = false;
-      document.getElementById('done-title').focus({ preventScroll: true });
-      card.scrollTop = 0;
-      form.reset();
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = 'Submit Reservation <span class="arw">→</span>';
-      fields.forEach(function (f) { f.closest('.fld').classList.remove('invalid'); });
-    };
-
-    if (!RESERVATION_ENDPOINT) { finish(); return; }
-
-    fetch(RESERVATION_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); return r; })
-      .then(finish)
-      .catch(function () {
-        formErr.classList.add('show');
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = 'Submit Reservation <span class="arw">→</span>';
+    postJSON('/api/create-order', payload)
+      .then(function (res) {
+        if (!res.ok) throw new Error((res.data && res.data.error) || 'Could not start the payment.');
+        openRazorpay(res.data, payload);
+      })
+      .catch(function (err) {
+        showError(err.message || 'Something went wrong. Please try again.');
+        setBusy(false);
       });
   });
 })();

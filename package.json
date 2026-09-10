@@ -1,0 +1,7 @@
+{
+  "name": "heart-and-mind-webinar",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  }
+}
