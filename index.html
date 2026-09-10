@@ -1362,10 +1362,6 @@ section{position:relative}
   <span class="sub">Live Online Session &nbsp;•&nbsp; 90 Minutes</span>
 </div>
 
-<!-- Loaded synchronously so window.Razorpay exists by the time the form
-     below is submitted — it only runs after a click, long after this
-     has finished loading. -->
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
 (function () {
@@ -1620,19 +1616,22 @@ section{position:relative}
   sync();
 
   /* ── Reservation form ──────────────────────────────────────────
-     One journey for every CTA: Registration -> Payment -> Confirmation.
+     One journey for every CTA: Registration -> Payment.
 
-     Submitting opens Razorpay Checkout. /api/create-order (server-side,
-     where the key secret lives) creates the order and returns just the
-     order id and the public key id; /api/verify-payment recomputes the
-     signature server-side afterward, because Razorpay's own "success"
-     callback fires client-side and could otherwise be forged from
-     devtools with a fake payment id. See api/create-order.js and
-     api/verify-payment.js.
+     Submitting validates the form, then hands off straight to a hosted
+     Razorpay Payment Link — there is no order-creation or signature
+     verification step on our side any more, because there is no
+     backend involved in the payment itself. Razorpay's Payment Pages
+     do not honour prefill query params the way the old Checkout.js
+     overlay did (confirmed: they render blank regardless), so nothing
+     is appended to the URL. Nothing about the form is recorded
+     anywhere either, since a static payment link has nowhere to send
+     it — validation here only gate-keeps who reaches the payment page.
 
-     REGISTRATION_URL is a bypass: set it to a hosted checkout or booking
-     page and every CTA opens that link instead of this form/payment. */
+     REGISTRATION_URL is a separate bypass: set it to a hosted checkout or
+     booking page and every CTA opens that link instead of this form. */
   var REGISTRATION_URL = '';
+  var PAYMENT_LINK = 'https://rzp.io/rzp/NPeuoBJ';
 
   var modal = document.getElementById('modal');
   var card = modal.querySelector('.modal-card');
@@ -1746,79 +1745,6 @@ section{position:relative}
     formErr.classList.add('show');
   }
 
-  /* Runs once a payment is confirmed genuine by /api/verify-payment. */
-  function onPaid(order) {
-    if (order.successRedirect) { window.location.href = order.successRedirect; return; }
-    viewForm.hidden = true;
-    viewDone.hidden = false;
-    document.getElementById('done-title').focus({ preventScroll: true });
-    card.scrollTop = 0;
-    form.reset();
-    setBusy(false);
-    form.querySelectorAll('.fld.invalid').forEach(function (f) { f.classList.remove('invalid'); });
-  }
-
-  /* Razorpay reported the payment failed, or our own signature check
-     rejected it — either way, nothing was actually paid. */
-  function onFailed(order, msg) {
-    if (order.failureRedirect) { window.location.href = order.failureRedirect; return; }
-    showError(msg);
-    setBusy(false);
-  }
-
-  function postJSON(url, body) {
-    return fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    }).then(function (r) {
-      return r.json()
-        .catch(function () { return {}; })
-        .then(function (data) { return { ok: r.ok, data: data }; });
-    });
-  }
-
-  function openRazorpay(order, payload) {
-    if (typeof Razorpay === 'undefined') {
-      showError('Payment could not load. Please check your connection and try again.');
-      setBusy(false);
-      return;
-    }
-
-    var rzp = new Razorpay({
-      key: order.keyId,
-      order_id: order.orderId,
-      amount: order.amount,
-      currency: order.currency,
-      name: 'Heart & Mind',
-      description: 'Live 90-Minute Session — 19 Sep 2026',
-      prefill: { name: payload.name, contact: payload.phone },
-      theme: { color: '#b0041a' },
-      modal: {
-        /* Closed the popup without paying — let them try again rather
-           than treating it as a failed payment. */
-        ondismiss: function () { setBusy(false); },
-      },
-      handler: function (response) {
-        setBusy(true, 'Confirming payment…');
-        postJSON('/api/verify-payment', response)
-          .then(function (res) {
-            if (res.ok && res.data.verified) onPaid(order);
-            else onFailed(order, 'We could not confirm that payment. Please contact us before trying again.');
-          })
-          .catch(function () {
-            onFailed(order, 'We could not confirm that payment. Please contact us before trying again.');
-          });
-      },
-    });
-
-    rzp.on('payment.failed', function () {
-      onFailed(order, 'The payment did not go through. Please try again.');
-    });
-
-    rzp.open();
-  }
-
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     formErr.classList.remove('show');
@@ -1827,24 +1753,8 @@ section{position:relative}
     var bad = fields.filter(function (f) { return !validate(f); });
     if (bad.length) { bad[0].focus(); return; }
 
-    var payload = {
-      name: form.elements.name.value.trim(),
-      age: parseInt(form.elements.age.value, 10),
-      sex: form.elements.sex.value,
-      phone: form.elements.phone.value.trim(),
-    };
-
-    setBusy(true, 'Starting payment…');
-
-    postJSON('/api/create-order', payload)
-      .then(function (res) {
-        if (!res.ok) throw new Error((res.data && res.data.error) || 'Could not start the payment.');
-        openRazorpay(res.data, payload);
-      })
-      .catch(function (err) {
-        showError(err.message || 'Something went wrong. Please try again.');
-        setBusy(false);
-      });
+    setBusy(true, 'Redirecting to payment…');
+    window.location.href = PAYMENT_LINK;
   });
 })();
 </script>
